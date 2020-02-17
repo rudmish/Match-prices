@@ -8,32 +8,27 @@
 
 import UIKit
 
+
+/// Класс секция с кнопкой добавления покупку в начало списка
 class AddBuyTopSection: UITableViewCell {
     
     
-    //MARK:- кнопка "добавить покупку"
+    // MARK:- кнопка "добавить покупку"
     @IBAction func Button1(_ sender: Any) {
+        // первый раз
         if !title.isHidden {
             title.isHidden = true
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showBuyBottomButton"), object: nil)
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showBuyTextField"), object: nil)
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showBuyKeyboardFirst"), object: nil)
-            //нижняя секция – магазины
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showPlaceBottom"), object: nil)
+            //добавить элемент в список
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "addBuyTop"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "disablePlaceTopButton"), object: nil)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showPlaceTopButton"), object: nil)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showPlaceList"), object: nil)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showPlaceTitle"), object: nil)
             addBuyTopButtonOutlet.isEnabled = false
-            
-            if (placesList.count == 0) {
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "disableTextFieldPlaceBottom"), object: nil)
-            } else {
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enableTextFieldPlaceBottom"), object: nil)
-            }
         } else {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "addToBuyList"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "addBuyTop"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showPlaceTopButton"), object: nil)
         }
-        
     }
     @IBOutlet weak var addBuyTopButtonOutlet: UIButton! //кнопка "добавить покупку" – внешний вид
     @IBOutlet weak var title: UILabel! //текст "Добавьте товары", пропадает при заполнении списка покупок
@@ -42,7 +37,7 @@ class AddBuyTopSection: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        addBuyTopButtonOutlet.isEnabled = false
+        //        addBuyTopButtonOutlet.isEnabled = false
         
         //Назначение отслеживающих для вызова из другого класса
         NotificationCenter.default.addObserver(self, selector: #selector(enableButton), name: NSNotification.Name(rawValue: "enableBuyTopButton"), object: nil)
@@ -50,16 +45,21 @@ class AddBuyTopSection: UITableViewCell {
         NotificationCenter.default.addObserver(self, selector: #selector(showTitle), name: NSNotification.Name(rawValue: "showBuyTopTitle"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(hideTitle), name: NSNotification.Name(rawValue: "hideBuyTopTitle"), object: nil)
         
+        
     }
+    
+    
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
+    /// разрешить нажатие на кнопку
     @objc private func enableButton(notification: NSNotification){
         addBuyTopButtonOutlet.isEnabled = true
     }
     
+    /// запретить нажатие на кнопку
     @objc private func disableButton(){
         addBuyTopButtonOutlet.isEnabled = false
     }

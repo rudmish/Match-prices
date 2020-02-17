@@ -8,6 +8,13 @@
 
 import Foundation
 
+
+//Data
+var priceSheetCellWidth = 100
+var priceSheetCellHeight = 50
+var isFirstStart = false
+
+
 var testList = [String]()
 var placesList = [String]()
 
@@ -23,13 +30,16 @@ let savedListsKey = "savedListsKey"
  Размер двумерного массива должен быть размеры обычных массивов
  */
 
-func createPricesArray() {
-    pricesArray[1][1] = 3.3
-}
+//func createPricesArray() {
+//    pricesArray[1][1] = 3.3
+//}
 
 func loadStartTestData() {
     //Подгрузить данные
-//    setCurrentListTitle()
+//    testList.append("Hello")
+//    placesList.append("World")
+//    placesList.append("World1")
+//    placesList.append("World2")
     var savedList : SavedList?
     //currentListTitle = nil
     currentListTitle = getCurrentListTitle()
@@ -38,12 +48,17 @@ func loadStartTestData() {
         savedList = getSavedList(title: currentListTitle!)
         if (savedList != nil) {
             testList = savedList!.testArray ?? [String]()
-            print(testList, "hhhhhhhh")
             placesList = savedList!.placesArray ?? [String]()
-            pricesArray = savedList!.pricesArray ?? [[Double]]()
+            pricesArray = savedList!.pricesArray ?? [[Double?]](repeating: [Double?](repeating: 0.0, count: placesListCount()), count: testListCount())
         }
+    } else {
+        pricesArray = [[Double?]](repeating: [Double?](repeating: 0.0, count: placesListCount()), count: testListCount())
     }
-    sumPrices()
+//    pricesArray = [[Double?]](repeating: [Double?](repeating: 0.0, count: placesList.count), count: testListCount())
+//    pricesArray = [[Double?]](repeating: [Double?](repeating: 0.0, count: placesList.count), count: testListCount())
+    
+//    sumPrices()
+    
     //setSavedLists(title: currentListTitle!)
 //    print(getSavedLists()?.count, "llll")
 //    testList.append("Hello")
@@ -57,18 +72,20 @@ func loadStartTestData() {
 //    placesList.append("World3")
 //    placesList.append("World4")
 //    placesList.append("World5")
-    pricesArray = [[Double?]](repeating: [Double?](repeating: 0.0, count: placesList.count), count: testList.count)
+    
 //    pricesArray[0][1] = 5.00
 //    pricesArray[0][2] = 2.00
 //    pricesArray[1][1] = 3.00
-//    sumPrices()
-    
+    sumPrices()
     //    print("t", sumPrices())
 }
 
 //добавление последней строки товара
 func addRowToEnd() {
-    pricesArray.append([Double?](repeating: 0.00, count: placesList.count))
+//    if (pricesArray[0].count == 0) {
+//        pricesArray.append([Double?](repeating: 0.00, count: placesListCount()))
+//    }
+    pricesArray.append([Double?](repeating: 0.00, count: placesListCount()))
     if (currentListTitle != nil) {
         guard saveList(title: currentListTitle!) else {
             return
@@ -78,7 +95,10 @@ func addRowToEnd() {
 
 //добавление первой строки товара
 func addRowToStart() {
-    pricesArray.insert([Double?](repeating: 0.00, count: placesList.count), at: 0)
+//    if (pricesArray[0].count == 0) {
+//        pricesArray.append([Double?](repeating: 0.00, count: placesListCount()))
+//    }
+    pricesArray.insert([Double?](repeating: 0.00, count: placesListCount()), at: 0)
     if (currentListTitle != nil) {
         guard saveList(title: currentListTitle!) else {
             return
@@ -88,6 +108,7 @@ func addRowToStart() {
 
 func removeRow(at index : Int) {
     pricesArray.remove(at: index)
+    sumArray.remove(at: index)
     sumPrices()
     if (currentListTitle != nil) {
         guard saveList(title: currentListTitle!) else {
@@ -98,7 +119,10 @@ func removeRow(at index : Int) {
 
 //добавление последнего столбца магазина
 func addColumnToEnd() {
-    for i in 0..<testList.count {
+    if (pricesArray.count == 0) {
+        pricesArray.append([Double?](repeating: 0.00, count: placesListCount()))
+    }
+    for i in 0..<testListCount() {
         pricesArray[i].append(0.00)
     }
     sumArray.append(0.00)
@@ -111,7 +135,10 @@ func addColumnToEnd() {
 
 //добавление первого столбца магазина
 func addColumnToStart() {
-    for i in 0..<testList.count {
+    if (pricesArray.count == 0) {
+        pricesArray.append([Double?](repeating: 0.00, count: placesListCount()))
+    }
+    for i in 0..<testListCount() {
         pricesArray[i].insert(0.00, at: 0)
     }
     sumArray.insert(0.00, at: 0)
@@ -122,15 +149,26 @@ func addColumnToStart() {
     }
 }
 
-func removeColumn() {
-    
+func removeColumn(at index : Int) {
+    for i in 0..<testListCount() {
+        pricesArray[i].remove(at: index)
+    }
+    sumArray.remove(at: index)
+    if (currentListTitle != nil) {
+        guard saveList(title: currentListTitle!) else {
+            return
+        }
+    }
 }
 
 func sumPrices() {
-    sumArray = [Double?](repeating: 0.00, count: placesList.count)
-    for i in 0..<placesList.count {
+    //pricesArray = [[Double?]](repeating: [Double?](repeating: 0.0, count: placesListCount()), count: testListCount())
+    
+    sumArray = [Double?](repeating: 0.00, count: placesListCount())
+    for i in 0..<placesListCount() {
         var summ = 0.00
-        for j in 0..<testList.count {
+        
+        for j in 0..<testListCount() {
             summ += pricesArray[j][i] ?? 0.00
         }
         sumArray[i]=summ
@@ -219,22 +257,16 @@ func setSavedLists(title : String) {
         UserDefaults.standard.set(encoded, forKey: savedListsKey)
         UserDefaults.standard.synchronize()
     }
-    
-    // проверить, что сохранилось
-    if let blogData = UserDefaults.standard.data(forKey: savedListsKey),
-        let lists = try? JSONDecoder().decode(SavedListTitles.self, from: blogData) {
-        let list = lists.mList
-        print(list)
-    }
 }
 
+/// Сохранить текущее название
 func setCurrentListTitle() {
     UserDefaults.standard.set(currentListTitle, forKey: "currentListTitle")
     UserDefaults.standard.synchronize()
 }
 
+/// Получить сохраненное название текущего списка
 func getCurrentListTitle() -> String? {
-//    currentListTitle = UserDefaults.standard.string(forKey: "currentListTitle")
     let res = UserDefaults.standard.string(forKey: "currentListTitle")
     return res
 }
@@ -250,6 +282,10 @@ func updateSavedLists() {
     }
 }
 
+/// Удалить элемент из массива названий списков
+/// - Parameters:
+///   - index: позиция в массиве
+///   - title: название списка (элемента)
 func removeListFromTitlesList(at index : Int, title : String) {
     UserDefaults.standard.set(nil, forKey: title)
     UserDefaults.standard.synchronize()
@@ -260,7 +296,6 @@ func removeListFromTitlesList(at index : Int, title : String) {
 /// Возвращает True, если получилось изменить название, fale – не получилось
 /// - Parameter title: обновленное название списка
 func changeTitleList(oldTitle : String, newTitle : String) -> Bool {
-    print(oldTitle)
     guard let index = titlesList.firstIndex(of: oldTitle) else {
         return false
     }
@@ -280,6 +315,36 @@ func changeTitleList(oldTitle : String, newTitle : String) -> Bool {
     
 }
 
+func testListCount() -> Int {
+    return getTestList().count
+}
+
+func getTestList() -> [String] {
+    var k = [String]()
+    for i in testList {
+        if i != "" {
+            k.append(i)
+        }
+        
+    }
+    return k
+}
+
+func placesListCount() -> Int {
+    return getPlacesList().count
+}
+
+func getPlacesList() -> [String] {
+    var k = [String]()
+    for i in placesList {
+        if i != "" {
+            k.append(i)
+        }
+        
+    }
+    return k
+}
+
 class SavedList : Codable {
     var testArray: [String]?
     var placesArray : [String]?
@@ -290,3 +355,21 @@ class SavedListTitles : Codable {
     var mList : [String]?
 }
 
+func showBuyTitleFirstTime() {
+    //if first
+    
+}
+
+
+func initialEmpty() {
+    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceTitle"), object: nil)
+    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceTop"), object: nil)
+    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceBottom"), object: nil)
+}
+
+func firstStartApp() {
+    if (!UserDefaults.standard.bool(forKey: "firstStart")) {
+        isFirstStart = true
+        UserDefaults.standard.set(true, forKey: "firstStart")
+    }
+}

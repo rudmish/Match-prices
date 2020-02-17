@@ -10,6 +10,7 @@
 		5B3FC30C23EF6B480068FE03 /* AddPlaceTopSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FC30B23EF6B480068FE03 /* AddPlaceTopSection.swift */; };
 		5B3FC30E23EF6CD20068FE03 /* AddPlaceBottomSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FC30D23EF6CD20068FE03 /* AddPlaceBottomSpace.swift */; };
 		5B3FC31023EF6E8F0068FE03 /* AddPlaceListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3FC30F23EF6E8F0068FE03 /* AddPlaceListSection.swift */; };
+		5B598A4B23FA06CC0070CCE8 /* AddBuyTitleSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B598A4A23FA06CC0070CCE8 /* AddBuyTitleSection.swift */; };
 		5B7D89CD23EEEC7C0008DA18 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7D89CC23EEEC7C0008DA18 /* ViewController.swift */; };
 		5B7D89CF23EEF32F0008DA18 /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7D89CE23EEF32F0008DA18 /* NavigationViewController.swift */; };
 		5B7D89D123EF0FA70008DA18 /* AddBuyTopSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7D89D023EF0FA70008DA18 /* AddBuyTopSection.swift */; };
@@ -55,6 +56,7 @@
 		5B3FC30B23EF6B480068FE03 /* AddPlaceTopSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaceTopSection.swift; sourceTree = "<group>"; };
 		5B3FC30D23EF6CD20068FE03 /* AddPlaceBottomSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaceBottomSpace.swift; sourceTree = "<group>"; };
 		5B3FC30F23EF6E8F0068FE03 /* AddPlaceListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaceListSection.swift; sourceTree = "<group>"; };
+		5B598A4A23FA06CC0070CCE8 /* AddBuyTitleSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBuyTitleSection.swift; sourceTree = "<group>"; };
 		5B7D89CC23EEEC7C0008DA18 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		5B7D89CE23EEF32F0008DA18 /* NavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
 		5B7D89D023EF0FA70008DA18 /* AddBuyTopSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBuyTopSection.swift; sourceTree = "<group>"; };
@@ -64,7 +66,7 @@
 		5BA3475323F0878300DA244F /* PriceSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceSheet.swift; sourceTree = "<group>"; };
 		5BA3475523F08C6300DA244F /* PriceSheetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceSheetCell.swift; sourceTree = "<group>"; };
 		5BA3475723F09F1500DA244F /* StickyGridCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyGridCollectionViewLayout.swift; sourceTree = "<group>"; };
-		5BAB02A423EEE5DE00444AAA /* Match prices.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Match prices.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5BAB02A423EEE5DE00444AAA /* Сравни цены.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Сравни цены.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BAB02A723EEE5DE00444AAA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5BAB02A923EEE5DE00444AAA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		5BAB02AE23EEE5DE00444AAA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -133,9 +135,10 @@
 		5B3FC30923EF6ABA0068FE03 /* addBuyPackage */ = {
 			isa = PBXGroup;
 			children = (
+				5B598A4A23FA06CC0070CCE8 /* AddBuyTitleSection.swift */,
 				5B7D89D023EF0FA70008DA18 /* AddBuyTopSection.swift */,
-				5B7D89D223EF101B0008DA18 /* AddBuyBottomSection.swift */,
 				5B7D89D423EF12EA0008DA18 /* AddBuyListSection.swift */,
+				5B7D89D223EF101B0008DA18 /* AddBuyBottomSection.swift */,
 			);
 			path = addBuyPackage;
 			sourceTree = "<group>";
@@ -184,7 +187,7 @@
 		5BAB02A523EEE5DE00444AAA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5BAB02A423EEE5DE00444AAA /* Match prices.app */,
+				5BAB02A423EEE5DE00444AAA /* Сравни цены.app */,
 				5BAB02BA23EEE5E200444AAA /* Match pricesTests.xctest */,
 				5BAB02C523EEE5E200444AAA /* Match pricesUITests.xctest */,
 			);
@@ -257,7 +260,7 @@
 			);
 			name = "Match prices";
 			productName = "Match prices";
-			productReference = 5BAB02A423EEE5DE00444AAA /* Match prices.app */;
+			productReference = 5BAB02A423EEE5DE00444AAA /* Сравни цены.app */;
 			productType = "com.apple.product-type.application";
 		};
 		5BAB02B923EEE5E200444AAA /* Match pricesTests */ = {
@@ -456,6 +459,7 @@
 				5B3FC31023EF6E8F0068FE03 /* AddPlaceListSection.swift in Sources */,
 				5B3FC30C23EF6B480068FE03 /* AddPlaceTopSection.swift in Sources */,
 				5BC59EBF23F049CF006D7F39 /* AddPlaceTitleSection.swift in Sources */,
+				5B598A4B23FA06CC0070CCE8 /* AddBuyTitleSection.swift in Sources */,
 				5B7D89D523EF12EA0008DA18 /* AddBuyListSection.swift in Sources */,
 				5BA3475423F0878300DA244F /* PriceSheet.swift in Sources */,
 			);
@@ -639,7 +643,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "nolit.Match-prices";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Сравни цены";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -658,7 +662,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "nolit.Match-prices";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Сравни цены";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

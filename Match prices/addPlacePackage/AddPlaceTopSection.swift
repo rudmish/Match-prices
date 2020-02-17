@@ -11,17 +11,30 @@ import UIKit
 
 class AddPlaceTopSection: UITableViewCell {
     
+    
+    
     @IBOutlet weak var addPlaceTopButtonOutlet: UIButton!
     @IBAction func AddPlaceToTop(_ sender: Any) {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "addToPlaceList"), object: nil)
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showPlaceBottom"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "addPlaceTop"), object: nil)
+//        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "addToPlaceList"), object: nil)
     }
+    @IBOutlet weak var title: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         
-        addPlaceTopButtonOutlet.isEnabled = false
+//        addPlaceTopButtonOutlet.isEnabled = false
+//        if (currentListTitle == nil) {
+//            addPlaceTopButtonOutlet.isHidden = true
+//        }
+        title.isHidden = true
         if (testList.count == 0) {
             addPlaceTopButtonOutlet.isHidden = true
+        } else {
+            addPlaceTopButtonOutlet.isHidden = false
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(enableButton), name: NSNotification.Name(rawValue: "enablePlaceTopButton"), object: nil)

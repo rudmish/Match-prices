@@ -12,6 +12,12 @@ import UIKit
 // Класс для таблицы (секция с таблицей)
 class PriceSheet: UITableViewCell {
 
+    override func prepareForReuse() {
+//      arrImges.removeAll()
+    
+      NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadDataCollection"), object: nil)
+    }
+    
     @IBOutlet weak var priceSheetColl: UICollectionView!
     @IBOutlet weak var gridLayout: StickyGridCollectionViewLayout! {
         didSet {
@@ -20,9 +26,11 @@ class PriceSheet: UITableViewCell {
         }
     }
     
+    // инициализация секции с таблицей
     override func awakeFromNib() {
         super.awakeFromNib()
-//        hidePriceSheet()
+        
+        // Инициализация методов
         NotificationCenter.default.addObserver(self, selector: #selector(showPriceSheet), name: NSNotification.Name(rawValue: "showPriceSheet"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(hidePriceSheet), name: NSNotification.Name(rawValue: "hidePriceSheet"), object: nil)
     }
@@ -33,6 +41,7 @@ class PriceSheet: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    /// скрыть показать таблицу
     @objc func hidePriceSheet() {
         priceSheetColl.isHidden = true
     }
@@ -43,22 +52,11 @@ class PriceSheet: UITableViewCell {
 
 }
 
-
-//extension PriceSheet {
-//    func setCollectionViewDataSourceDelegate <D: UICollectionViewDelegate & UICollectionViewDataSource>
-//        (_ dataSourceDelegate: D, forRow row: Int) {
-//        priceSheetColl.delegate = dataSourceDelegate
-//        priceSheetColl.dataSource = dataSourceDelegate
-//        priceSheetColl.reloadData()
-//    }
-//}
-
-
 // Устанавливает размеры ячеек таблицы
 extension ViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 100, height: 50)
+        return CGSize(width: priceSheetCellWidth, height: priceSheetCellHeight)
     }
     
 }

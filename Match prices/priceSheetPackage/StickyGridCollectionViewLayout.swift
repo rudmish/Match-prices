@@ -22,6 +22,7 @@ class StickyGridCollectionViewLayout: UICollectionViewFlowLayout {
         return contentSize
     }
     
+    
     private var allAttributes: [[UICollectionViewLayoutAttributes]] = []
 
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
@@ -109,7 +110,7 @@ class StickyGridCollectionViewLayout: UICollectionViewFlowLayout {
     }
     
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
-        return true
+        return false
     }
     
     private func updateStickyItemsPositions() {

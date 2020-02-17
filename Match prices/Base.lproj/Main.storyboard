@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellAddBuyTitle" id="Zy5-XM-Qsh">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AddBuyTitleSection" id="Zy5-XM-Qsh" customClass="AddBuyTitleSection" customModule="Match_prices" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Zy5-XM-Qsh" id="TqF-F9-f2j">
@@ -35,6 +35,9 @@
                                         <constraint firstItem="zYG-2e-aBu" firstAttribute="centerX" secondItem="TqF-F9-f2j" secondAttribute="centerX" id="tyM-9a-mcc"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="title" destination="zYG-2e-aBu" id="04T-Qf-x8n"/>
+                                </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellAddBuyTopSection" rowHeight="33" id="KX5-b3-bQ0" customClass="AddBuyTopSection" customModule="Match_prices" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="71.5" width="414" height="33"/>
@@ -74,66 +77,55 @@
                                     <outlet property="title" destination="fWc-qJ-Fn9" id="Tpt-ti-ll0"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" showsReorderControl="YES" indentationWidth="10" shouldIndentWhileEditing="NO" reuseIdentifier="cellAddBuyListSection" id="Yh9-RA-eeh" customClass="AddBuyListSection" customModule="Match_prices" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" showsReorderControl="YES" indentationWidth="10" reuseIdentifier="cellAddBuyListSection" id="Yh9-RA-eeh" customClass="AddBuyListSection" customModule="Match_prices" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="104.5" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Yh9-RA-eeh" id="kQq-38-ZMY">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3FN-rt-c3k">
-                                            <rect key="frame" x="20" y="11.5" width="366" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="3FN-rt-c3k" firstAttribute="leading" secondItem="kQq-38-ZMY" secondAttribute="leadingMargin" id="B1t-uO-Mhe"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="3FN-rt-c3k" secondAttribute="trailing" constant="8" id="KD4-aS-ndj"/>
-                                        <constraint firstItem="3FN-rt-c3k" firstAttribute="centerY" secondItem="kQq-38-ZMY" secondAttribute="centerY" id="PZt-5J-3NT"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="title" destination="3FN-rt-c3k" id="YH8-9i-DBf"/>
-                                </connections>
-                            </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellAddBuyBottomSection" rowHeight="83" id="ZkJ-q0-ctb" customClass="AddBuyBottomSection" customModule="Match_prices" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="148" width="414" height="83"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ZkJ-q0-ctb" id="8Zs-D0-e2V">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="83"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ntI-1u-XuU">
-                                            <rect key="frame" x="20" y="53" width="18" height="22"/>
-                                            <state key="normal" image="plus" catalog="system"/>
-                                            <connections>
-                                                <action selector="Button2:" destination="ZkJ-q0-ctb" eventType="touchUpInside" id="7NV-tv-1Zw"/>
-                                            </connections>
-                                        </button>
-                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Введите название покупки..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QnD-xs-2Ol">
-                                            <rect key="frame" x="20" y="11" width="374" height="34"/>
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="B6W-xq-7pf" customClass="BuyListTextField" customModule="Match_prices" customModuleProvider="target">
+                                            <rect key="frame" x="20" y="13.5" width="374" height="17"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits"/>
                                         </textField>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="QnD-xs-2Ol" firstAttribute="top" secondItem="8Zs-D0-e2V" secondAttribute="topMargin" id="11o-uJ-F9Z"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="QnD-xs-2Ol" secondAttribute="trailing" id="Asv-vr-Ei0"/>
-                                        <constraint firstAttribute="bottom" secondItem="ntI-1u-XuU" secondAttribute="bottom" constant="8" id="J7W-au-kjm"/>
+                                        <constraint firstItem="B6W-xq-7pf" firstAttribute="leading" secondItem="kQq-38-ZMY" secondAttribute="leadingMargin" id="2Gd-9m-Tcw"/>
+                                        <constraint firstItem="B6W-xq-7pf" firstAttribute="centerY" secondItem="kQq-38-ZMY" secondAttribute="centerY" id="RcK-CD-eI0"/>
+                                        <constraint firstItem="B6W-xq-7pf" firstAttribute="trailing" secondItem="kQq-38-ZMY" secondAttribute="trailingMargin" id="eRO-4u-ziH"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="title" destination="B6W-xq-7pf" id="4ya-4V-FdX"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellAddBuyBottomSection" rowHeight="33" id="ZkJ-q0-ctb" customClass="AddBuyBottomSection" customModule="Match_prices" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="148" width="414" height="33"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ZkJ-q0-ctb" id="8Zs-D0-e2V">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="33"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ntI-1u-XuU">
+                                            <rect key="frame" x="20" y="5.5" width="18" height="22"/>
+                                            <state key="normal" image="plus" catalog="system"/>
+                                            <connections>
+                                                <action selector="AddBuyBottomButtonAction:" destination="ZkJ-q0-ctb" eventType="touchUpInside" id="7NV-tv-1Zw"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
                                         <constraint firstItem="ntI-1u-XuU" firstAttribute="leading" secondItem="8Zs-D0-e2V" secondAttribute="leadingMargin" id="O5F-XN-EIw"/>
-                                        <constraint firstItem="QnD-xs-2Ol" firstAttribute="leading" secondItem="8Zs-D0-e2V" secondAttribute="leadingMargin" id="cDH-Xn-OgP"/>
-                                        <constraint firstItem="ntI-1u-XuU" firstAttribute="top" secondItem="QnD-xs-2Ol" secondAttribute="bottom" constant="8" id="gfk-wc-kYi"/>
+                                        <constraint firstItem="ntI-1u-XuU" firstAttribute="centerY" secondItem="8Zs-D0-e2V" secondAttribute="centerY" id="nC4-MY-W65"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="AddBuyBottomButtonOutlet" destination="ntI-1u-XuU" id="cxV-Sz-m9V"/>
-                                    <outlet property="textField" destination="QnD-xs-2Ol" id="TVp-zi-4VL"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellAddPlaceTitle" id="ALE-jn-T2F" customClass="AddPlaceTitleSection" customModule="Match_prices" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="231" width="414" height="43.5"/>
+                                <rect key="frame" x="0.0" y="181" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ALE-jn-T2F" id="u7O-JR-AK9">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -155,90 +147,93 @@
                                     <outlet property="title" destination="HY9-IY-gov" id="qxE-if-ocx"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellAddPlaceTopSection" rowHeight="16" id="rlq-r2-s4P" customClass="AddPlaceTopSection" customModule="Match_prices" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="274.5" width="414" height="16"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellAddPlaceTopSection" rowHeight="33" id="rlq-r2-s4P" customClass="AddPlaceTopSection" customModule="Match_prices" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="224.5" width="414" height="33"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rlq-r2-s4P" id="tdr-tQ-bi2">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="16"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="33"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i6U-Wp-gRh">
-                                            <rect key="frame" x="20" y="-3" width="18" height="22"/>
+                                            <rect key="frame" x="20" y="5.5" width="18" height="22"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="22" id="NaJ-qU-XOF"/>
+                                                <constraint firstAttribute="width" constant="18" id="YrM-vd-mHo"/>
+                                            </constraints>
                                             <state key="normal" image="plus" catalog="system"/>
                                             <connections>
                                                 <action selector="AddPlaceToTop:" destination="rlq-r2-s4P" eventType="touchUpInside" id="5aJ-V1-Bal"/>
                                             </connections>
                                         </button>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="i6U-Wp-gRh" firstAttribute="centerY" secondItem="tdr-tQ-bi2" secondAttribute="centerY" id="lSj-X7-EKc"/>
-                                        <constraint firstItem="i6U-Wp-gRh" firstAttribute="leading" secondItem="tdr-tQ-bi2" secondAttribute="leading" constant="20" symbolic="YES" id="oLb-1I-cfH"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="addPlaceTopButtonOutlet" destination="i6U-Wp-gRh" id="JXq-68-gVg"/>
-                                </connections>
-                            </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellAddPlaceListSection" id="PHy-oj-gRb" customClass="AddPlaceListSection" customModule="Match_prices" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="290.5" width="414" height="43.5"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PHy-oj-gRb" id="0VX-hR-tFD">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Owz-7M-vcP">
-                                            <rect key="frame" x="20" y="11.5" width="366" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Добавьте продукты" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fow-Qw-Oet">
+                                            <rect key="frame" x="46" y="6" width="360" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailingMargin" secondItem="Owz-7M-vcP" secondAttribute="trailing" constant="8" id="0qg-xy-We1"/>
-                                        <constraint firstItem="Owz-7M-vcP" firstAttribute="centerY" secondItem="0VX-hR-tFD" secondAttribute="centerY" id="kRq-20-QSh"/>
-                                        <constraint firstItem="Owz-7M-vcP" firstAttribute="leading" secondItem="0VX-hR-tFD" secondAttribute="leadingMargin" id="vYZ-HK-jld"/>
+                                        <constraint firstItem="fow-Qw-Oet" firstAttribute="centerY" secondItem="tdr-tQ-bi2" secondAttribute="centerY" id="e1l-qs-MJm"/>
+                                        <constraint firstItem="fow-Qw-Oet" firstAttribute="leading" secondItem="i6U-Wp-gRh" secondAttribute="trailing" constant="8" id="gZF-3T-v2F"/>
+                                        <constraint firstItem="i6U-Wp-gRh" firstAttribute="centerY" secondItem="tdr-tQ-bi2" secondAttribute="centerY" id="lSj-X7-EKc"/>
+                                        <constraint firstItem="i6U-Wp-gRh" firstAttribute="leading" secondItem="tdr-tQ-bi2" secondAttribute="leading" constant="20" symbolic="YES" id="oLb-1I-cfH"/>
+                                        <constraint firstAttribute="trailing" secondItem="fow-Qw-Oet" secondAttribute="trailing" constant="8" id="xsV-pp-6Dc"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="title" destination="Owz-7M-vcP" id="We1-gn-R0U"/>
+                                    <outlet property="addPlaceTopButtonOutlet" destination="i6U-Wp-gRh" id="JXq-68-gVg"/>
+                                    <outlet property="title" destination="fow-Qw-Oet" id="3F7-m0-0cB"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellAddPlaceBottomSection" rowHeight="83" id="wVx-0P-e5i" customClass="AddPlaceBottomSection" customModule="Match_prices" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="334" width="414" height="83"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellAddPlaceListSection" id="PHy-oj-gRb" customClass="AddPlaceListSection" customModule="Match_prices" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="257.5" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wVx-0P-e5i" id="ykK-Nz-V2B">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="83"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PHy-oj-gRb" id="0VX-hR-tFD">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fYk-nB-5OT">
-                                            <rect key="frame" x="20" y="53" width="18" height="22"/>
-                                            <state key="normal" image="plus" catalog="system"/>
-                                            <connections>
-                                                <action selector="AddPlaceBottomButton:" destination="wVx-0P-e5i" eventType="touchUpInside" id="vj2-YC-JQc"/>
-                                            </connections>
-                                        </button>
-                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Введите название магазина..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="knN-HM-OiN">
-                                            <rect key="frame" x="20" y="11" width="374" height="34"/>
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dlX-FK-61h" customClass="PlaceListTextField" customModule="Match_prices" customModuleProvider="target">
+                                            <rect key="frame" x="20" y="13.5" width="374" height="17"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits"/>
                                         </textField>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="knN-HM-OiN" firstAttribute="leading" secondItem="ykK-Nz-V2B" secondAttribute="leadingMargin" id="49n-wa-3Mo"/>
-                                        <constraint firstAttribute="bottom" secondItem="fYk-nB-5OT" secondAttribute="bottom" constant="8" id="7Py-B7-lhG"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="knN-HM-OiN" secondAttribute="trailing" id="83O-Kq-voj"/>
-                                        <constraint firstItem="knN-HM-OiN" firstAttribute="top" secondItem="ykK-Nz-V2B" secondAttribute="topMargin" id="Oob-2a-DXq"/>
+                                        <constraint firstItem="dlX-FK-61h" firstAttribute="leading" secondItem="0VX-hR-tFD" secondAttribute="leadingMargin" id="BSX-fy-fEE"/>
+                                        <constraint firstItem="dlX-FK-61h" firstAttribute="trailing" secondItem="0VX-hR-tFD" secondAttribute="trailingMargin" id="Vlx-IX-5kC"/>
+                                        <constraint firstItem="dlX-FK-61h" firstAttribute="centerY" secondItem="0VX-hR-tFD" secondAttribute="centerY" id="hk8-fv-f8V"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="title" destination="dlX-FK-61h" id="uqC-xW-3u8"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellAddPlaceBottomSection" rowHeight="33" id="wVx-0P-e5i" customClass="AddPlaceBottomSection" customModule="Match_prices" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="301" width="414" height="33"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wVx-0P-e5i" id="ykK-Nz-V2B">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="33"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fYk-nB-5OT">
+                                            <rect key="frame" x="20" y="5.5" width="18" height="22"/>
+                                            <state key="normal" image="plus" catalog="system"/>
+                                            <connections>
+                                                <action selector="addPlaceBottomButton:" destination="wVx-0P-e5i" eventType="touchUpInside" id="vj2-YC-JQc"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
                                         <constraint firstItem="fYk-nB-5OT" firstAttribute="leading" secondItem="ykK-Nz-V2B" secondAttribute="leadingMargin" id="R1y-I6-Rqj"/>
-                                        <constraint firstItem="fYk-nB-5OT" firstAttribute="top" secondItem="knN-HM-OiN" secondAttribute="bottom" constant="8" id="cMD-D7-euW"/>
+                                        <constraint firstItem="fYk-nB-5OT" firstAttribute="centerY" secondItem="ykK-Nz-V2B" secondAttribute="centerY" id="mdl-cj-SX3"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="addPlaceBottomButtonOutlet" destination="fYk-nB-5OT" id="4pt-5O-Fm8"/>
-                                    <outlet property="textField" destination="knN-HM-OiN" id="xnT-up-akT"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PriceSheet" rowHeight="480" id="hYS-aZ-1Kq" customClass="PriceSheet" customModule="Match_prices" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="417" width="414" height="480"/>
+                                <rect key="frame" x="0.0" y="334" width="414" height="480"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hYS-aZ-1Kq" id="lc5-4g-dpa">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="480"/>
@@ -264,25 +259,25 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="180" height="126"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W8Z-wu-hOD">
-                                                                <rect key="frame" x="20" y="52.5" width="160" height="21"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W8Z-wu-hOD">
+                                                                <rect key="frame" x="0.0" y="52.5" width="180" height="21"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oDf-zQ-njh" customClass="DictionaryTextField" customModule="Match_prices" customModuleProvider="target">
-                                                                <rect key="frame" x="8" y="46" width="164" height="34"/>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oDf-zQ-njh" customClass="DictionaryTextField" customModule="Match_prices" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="54.5" width="180" height="17"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <textInputTraits key="textInputTraits"/>
                                                             </textField>
                                                         </subviews>
                                                         <constraints>
+                                                            <constraint firstItem="W8Z-wu-hOD" firstAttribute="leading" secondItem="rhg-0N-zl1" secondAttribute="leading" id="2p6-Ml-uFP"/>
                                                             <constraint firstItem="oDf-zQ-njh" firstAttribute="centerY" secondItem="rhg-0N-zl1" secondAttribute="centerY" id="D2c-1i-dfw"/>
-                                                            <constraint firstAttribute="trailing" secondItem="W8Z-wu-hOD" secondAttribute="trailing" id="HLu-65-TnR"/>
-                                                            <constraint firstAttribute="trailing" secondItem="oDf-zQ-njh" secondAttribute="trailing" constant="8" id="K9P-cb-GQg"/>
-                                                            <constraint firstItem="oDf-zQ-njh" firstAttribute="leading" secondItem="rhg-0N-zl1" secondAttribute="leading" constant="8" id="SOS-8k-sDB"/>
-                                                            <constraint firstItem="W8Z-wu-hOD" firstAttribute="centerY" secondItem="rhg-0N-zl1" secondAttribute="centerY" id="pRR-hu-jRH"/>
-                                                            <constraint firstItem="W8Z-wu-hOD" firstAttribute="leading" secondItem="rhg-0N-zl1" secondAttribute="leading" constant="20" symbolic="YES" id="rS3-OF-wmI"/>
+                                                            <constraint firstAttribute="trailing" secondItem="oDf-zQ-njh" secondAttribute="trailing" id="K9P-cb-GQg"/>
+                                                            <constraint firstAttribute="trailing" secondItem="W8Z-wu-hOD" secondAttribute="trailing" id="QMP-KB-lzs"/>
+                                                            <constraint firstItem="oDf-zQ-njh" firstAttribute="leading" secondItem="rhg-0N-zl1" secondAttribute="leading" id="SOS-8k-sDB"/>
+                                                            <constraint firstItem="W8Z-wu-hOD" firstAttribute="centerY" secondItem="rhg-0N-zl1" secondAttribute="centerY" id="pRY-5w-b2R"/>
                                                         </constraints>
                                                     </collectionViewCellContentView>
                                                     <size key="customSize" width="180" height="126"/>
@@ -317,7 +312,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="wZ3-sx-88F">
-                        <barButtonItem key="leftBarButtonItem" title="Item" image="info.circle" catalog="system" id="Cw1-5T-7kY"/>
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="info.circle" catalog="system" id="Cw1-5T-7kY">
+                            <connections>
+                                <action selector="donatButton:" destination="25u-ZZ-thg" id="q8w-g7-2vW"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zeq-GQ-3ff" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
