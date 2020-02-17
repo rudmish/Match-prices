@@ -25,6 +25,8 @@ var currentBuyTitle : String = "Добавьте товары"
 var currentPlacesTitle : String = "Добавьте магазины"
 let list = ["товары2", "наименования", "услуги", "материалы", "лекарства", "продукты", "ингредиенты", "товары"]
 let placesListTitles = ["магазины", "аптеки", "исполнители", "продавцы", "мастерские", "магазины"]
+
+var arrowCounter = 0
 /*
  Размер двумерного массива должен быть размеры обычных массивов
  */
@@ -45,6 +47,7 @@ func loadStartTestData() {
             buyList = savedList!.testArray ?? [String]()
             placesList = savedList!.placesArray ?? [String]()
             pricesArray = savedList!.pricesArray ?? [[Double?]](repeating: [Double?](repeating: 0.0, count: placesListCount()), count: buyListCount())
+            print(buyList, placesList, pricesArray)
         }
     } else {
         pricesArray = [[Double?]](repeating: [Double?](repeating: 0.0, count: placesListCount()), count: buyListCount())
@@ -93,6 +96,7 @@ func addColumnToEnd() {
         pricesArray[i].append(0.00)
     }
     sumArray.append(0.00)
+    showPriceArrow()
     if (currentListTitle != nil) {
         guard saveList(title: currentListTitle!) else {
             return
@@ -109,6 +113,7 @@ func addColumnToStart() {
         pricesArray[i].insert(0.00, at: 0)
     }
     sumArray.insert(0.00, at: 0)
+    showPriceArrow()
     if (currentListTitle != nil) {
         guard saveList(title: currentListTitle!) else {
             return
@@ -335,6 +340,32 @@ class SavedListTitles : Codable {
     var mList : [String]?
 }
 
+func showPriceArrow() {
+    // если в списке магазинов больше 3
+    if placesListCount() > 3 && arrowCounter > 0
+    {
+        
+        arrowCounter-=1
+        DispatchQueue.main.asyncAfter(deadline: .now()+1, execute: {
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showArrow"), object: nil)
+            
+        })
+        DispatchQueue.main.asyncAfter(deadline: .now()+1.5, execute: {
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hideArrow"), object: nil)
+        })
+        DispatchQueue.main.asyncAfter(deadline: .now()+2, execute: {
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showArrow"), object: nil)
+            
+        })
+        DispatchQueue.main.asyncAfter(deadline: .now()+2.5, execute: {
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hideArrow"), object: nil)
+        })
+        
+        
+    }
+}
+
+
 
 //func initialEmpty() {
 //    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceTitle"), object: nil)
@@ -346,7 +377,12 @@ class SavedListTitles : Codable {
 /// Если да – сохраняет значение в память
 func firstStartApp() {
     if (!UserDefaults.standard.bool(forKey: "firstStart")) {
+        UserDefaults.standard.set(3, forKey: "arrow_counter")
         isFirstStart = true
         UserDefaults.standard.set(true, forKey: "firstStart")
     }
+    if (UserDefaults.standard.integer(forKey: "arrow_counter") > 0) {
+        arrowCounter = 2
+    }
 }
+

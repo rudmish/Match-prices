@@ -12,6 +12,9 @@ import UIKit
 // Класс для таблицы (секция с таблицей)
 class PriceSheet: UITableViewCell {
 
+    @IBOutlet weak var imageArrow: UIImageView!
+    
+
     override func prepareForReuse() {
       NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadDataCollection"), object: nil)
     }
@@ -24,13 +27,20 @@ class PriceSheet: UITableViewCell {
         }
     }
     
+    
+    
     // инициализация секции с таблицей
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        imageArrow.isHidden = true
         // Инициализация методов
         NotificationCenter.default.addObserver(self, selector: #selector(showPriceSheet), name: NSNotification.Name(rawValue: "showPriceSheet"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(hidePriceSheet), name: NSNotification.Name(rawValue: "hidePriceSheet"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(showArrow), name: NSNotification.Name(rawValue: "showArrow"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(hideArrow), name: NSNotification.Name(rawValue: "hideArrow"), object: nil)
+        
+        imageArrow.image = UIImage(systemName: "arrow.right")
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -44,6 +54,18 @@ class PriceSheet: UITableViewCell {
     
     @objc func showPriceSheet() {
         priceSheetColl.isHidden = false
+    }
+    
+    @objc func showArrow() {
+        UIView.transition(with: imageArrow, duration: 0.5, options: .transitionCrossDissolve, animations: {
+            self.imageArrow.isHidden = false
+        })
+    }
+    
+    @objc func hideArrow() {
+        UIView.transition(with: imageArrow, duration: 0.5, options: .transitionCrossDissolve, animations: {
+            self.imageArrow.isHidden = true
+        })
     }
 
 }

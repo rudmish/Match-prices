@@ -239,7 +239,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="480"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hCe-hL-Wv7">
+                                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hCe-hL-Wv7">
                                             <rect key="frame" x="20" y="19" width="374" height="450"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                             <constraints>
@@ -292,6 +292,10 @@
                                                 <outlet property="delegate" destination="25u-ZZ-thg" id="Xab-MB-jmL"/>
                                             </connections>
                                         </collectionView>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="XX3-nG-zXa">
+                                            <rect key="frame" x="20" y="15" width="374" height="450"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="trailingMargin" secondItem="hCe-hL-Wv7" secondAttribute="trailing" id="CHA-gm-KMT"/>
@@ -302,6 +306,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="gridLayout" destination="axP-BN-mIf" id="o2T-I4-yIO"/>
+                                    <outlet property="imageArrow" destination="XX3-nG-zXa" id="OxC-Me-hwH"/>
                                     <outlet property="priceSheetColl" destination="hCe-hL-Wv7" id="Anj-1y-WJk"/>
                                 </connections>
                             </tableViewCell>

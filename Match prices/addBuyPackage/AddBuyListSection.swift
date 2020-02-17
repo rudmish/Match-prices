@@ -183,6 +183,7 @@ class AddBuyListSection: UITableViewCell, UITextFieldDelegate {
     }
 }
 
+
 /// текстовое поле для ячейки с расширением
 /// для отслеживания номера ячейки
 class BuyListTextField: UITextField {

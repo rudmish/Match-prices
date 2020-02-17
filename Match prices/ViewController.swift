@@ -154,6 +154,7 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
         self.present(alertSaveList, animated: true, completion: nil)
     }
     
+    
     // показывать клавиатуру при добавлении нового элемента в список
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell2 = cell as? AddBuyListSection {
@@ -168,15 +169,12 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
         }
         // при подгрузка списка с уже 4 полями магазинов
         if let cell2 = cell as? PriceSheet {
-            if placesListCount() > 3 && currentListTitle != nil && counter > 0 {
-                counter-=1
-                print("Показать")
-            }
+            showPriceArrow()
             
         }
     }
     
-    var counter = 2
+   
     
     //MARK:- Редактирование списоков
     
