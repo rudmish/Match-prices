@@ -50,10 +50,12 @@ class AddBuyBottomSection: UITableViewCell, UITextFieldDelegate {
         }
     }
     
+    /// разрешить нажатие на нижнюю кнопку
     @objc func enableBuyBottomButton() {
         AddBuyBottomButtonOutlet.isEnabled = true
     }
     
+    /// запретить нажатие на нижнюю кнопку
     @objc func disableBuyBottomButton() {
         AddBuyBottomButtonOutlet.isEnabled = false
     }

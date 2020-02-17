@@ -15,7 +15,7 @@ class AddBuyTopSection: UITableViewCell {
     
     // MARK:- кнопка "добавить покупку"
     @IBAction func Button1(_ sender: Any) {
-        // первый раз
+        // первый раз, когда в списке покупок нет элементов
         if !title.isHidden {
             title.isHidden = true
             //добавить элемент в список

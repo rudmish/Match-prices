@@ -37,11 +37,15 @@ class AddBuyListSection: UITableViewCell, UITextFieldDelegate {
         
     }
     
+    //обработка длительного нажатия на элемент списка
     @objc func handleLongPress(longPressGesture: UILongPressGestureRecognizer) {
+        // Если меню не открыто
             if (!isAlertRemoveBuyOpen) {
+                //открываем меню
                 isAlertRemoveBuyOpen = true
                 let optionMenu = UIAlertController(title: nil, message: "Выберите действие", preferredStyle: .actionSheet)
                
+                // кнопки удаления и отмены
                 let actionRemove = UIAlertAction(title: "Удалить", style: .default, handler: {action in
                     buyList.remove(at: self.title.item!.row)
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateLists"), object: nil)
@@ -53,6 +57,8 @@ class AddBuyListSection: UITableViewCell, UITextFieldDelegate {
                 })
                 optionMenu.addAction(actionRemove)
                 optionMenu.addAction(cancelAction)
+                
+                // показать меню (не обыным present так как находимся в ячейке таблицы, а не  на главном экране
                 let keyWindow = UIApplication.shared.connectedScenes
                 .filter({$0.activationState == .foregroundActive})
                 .map({$0 as? UIWindowScene})
@@ -64,6 +70,7 @@ class AddBuyListSection: UITableViewCell, UITextFieldDelegate {
         }
     
     
+    // отслеживание изменения ввода текста в реальном времени
     @objc func textFieldDidChange(_ textField: UITextField) {
         if (textField.text!.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "disablePlaceTopButton"), object: nil)
@@ -71,9 +78,7 @@ class AddBuyListSection: UITableViewCell, UITextFieldDelegate {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "disableBuyBottomButton"), object: nil)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "disablePlaceTitle"), object: nil)
             
-            
         } else {
-            
             
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enablePlaceTopButton"), object: nil)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enableBuyTopButton"), object: nil)
@@ -83,12 +88,15 @@ class AddBuyListSection: UITableViewCell, UITextFieldDelegate {
         }
     }
     
+    
+    // Проверка окончания ввода текста
     func textFieldDidEndEditing(_ textField: UITextField) {
+        
         if let textField = textField as? BuyListTextField  {
-            let row = textField.item?.row
+            let row = textField.item?.row // индекс элемента (текстового поля)
             let res = textField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             if (!res.isEmpty && row != nil) {
-                
+                // Если введено не пустое значение
                 // Если добавляем в конец
                 if (row == buyList.count-1) {
                     buyList[row!] = res
@@ -108,6 +116,8 @@ class AddBuyListSection: UITableViewCell, UITextFieldDelegate {
                 }
                 
             } else {
+                
+                //Если пустое – удаляем соотвествующий элемент списка
                 if (buyList.count > 0) {
                     if (buyList[0] == "") {
                         buyList.remove(at: 0)
@@ -129,6 +139,7 @@ class AddBuyListSection: UITableViewCell, UITextFieldDelegate {
         
     }
     
+    //функция для отображения клавиатуры
     @objc func showBuyTopKeyboard() {
         title.becomeFirstResponder()
     }

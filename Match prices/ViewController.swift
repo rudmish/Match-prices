@@ -166,7 +166,17 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
                 cell2.title.becomeFirstResponder()
             }
         }
+        // при подгрузка списка с уже 4 полями магазинов
+        if let cell2 = cell as? PriceSheet {
+            if placesListCount() > 3 && currentListTitle != nil && counter > 0 {
+                counter-=1
+                print("Показать")
+            }
+            
+        }
     }
+    
+    var counter = 2
     
     //MARK:- Редактирование списоков
     
