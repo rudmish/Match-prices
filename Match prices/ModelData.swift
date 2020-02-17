@@ -1,10 +1,6 @@
 //
 //  ModelData.swift
 //  Match prices
-//
-//  Created by Евгений Конев on 08.02.2020.
-//  Copyright © 2020 Nolit. All rights reserved.
-//
 
 import Foundation
 
@@ -15,7 +11,7 @@ var priceSheetCellHeight = 50
 var isFirstStart = false
 
 
-var testList = [String]()
+var buyList = [String]()
 var placesList = [String]()
 
 var pricesArray = [[Double?]]()
@@ -25,66 +21,39 @@ var sumArray = [Double?]()
 var titlesList = [String]()
 
 let savedListsKey = "savedListsKey"
-
+var currentBuyTitle : String = "Добавьте товары"
+var currentPlacesTitle : String = "Добавьте магазины"
+let list = ["товары2", "наименования", "услуги", "материалы", "лекарства", "продукты", "ингредиенты", "товары"]
+let placesListTitles = ["магазины", "аптеки", "исполнители", "продавцы", "мастерские", "магазины"]
 /*
  Размер двумерного массива должен быть размеры обычных массивов
  */
 
-//func createPricesArray() {
-//    pricesArray[1][1] = 3.3
-//}
 
 func loadStartTestData() {
-    //Подгрузить данные
-//    testList.append("Hello")
+    //Подгрузить данные (для тестирование)
+//    buyList.append("Hello")
 //    placesList.append("World")
 //    placesList.append("World1")
 //    placesList.append("World2")
     var savedList : SavedList?
-    //currentListTitle = nil
     currentListTitle = getCurrentListTitle()
     if (currentListTitle != nil) {
         
         savedList = getSavedList(title: currentListTitle!)
         if (savedList != nil) {
-            testList = savedList!.testArray ?? [String]()
+            buyList = savedList!.testArray ?? [String]()
             placesList = savedList!.placesArray ?? [String]()
-            pricesArray = savedList!.pricesArray ?? [[Double?]](repeating: [Double?](repeating: 0.0, count: placesListCount()), count: testListCount())
+            pricesArray = savedList!.pricesArray ?? [[Double?]](repeating: [Double?](repeating: 0.0, count: placesListCount()), count: buyListCount())
         }
     } else {
-        pricesArray = [[Double?]](repeating: [Double?](repeating: 0.0, count: placesListCount()), count: testListCount())
+        pricesArray = [[Double?]](repeating: [Double?](repeating: 0.0, count: placesListCount()), count: buyListCount())
     }
-//    pricesArray = [[Double?]](repeating: [Double?](repeating: 0.0, count: placesList.count), count: testListCount())
-//    pricesArray = [[Double?]](repeating: [Double?](repeating: 0.0, count: placesList.count), count: testListCount())
-    
-//    sumPrices()
-    
-    //setSavedLists(title: currentListTitle!)
-//    print(getSavedLists()?.count, "llll")
-//    testList.append("Hello")
-//    testList.append("Hello1")
-//    testList.append("Hello2")
-//    testList.append("Hello3")
-//    testList.append("Hello4")
-//    placesList.append("World")
-//    placesList.append("World1")
-//    placesList.append("World2")
-//    placesList.append("World3")
-//    placesList.append("World4")
-//    placesList.append("World5")
-    
-//    pricesArray[0][1] = 5.00
-//    pricesArray[0][2] = 2.00
-//    pricesArray[1][1] = 3.00
     sumPrices()
-    //    print("t", sumPrices())
 }
 
-//добавление последней строки товара
+/// добавление в талицу цен последней строки товара
 func addRowToEnd() {
-//    if (pricesArray[0].count == 0) {
-//        pricesArray.append([Double?](repeating: 0.00, count: placesListCount()))
-//    }
     pricesArray.append([Double?](repeating: 0.00, count: placesListCount()))
     if (currentListTitle != nil) {
         guard saveList(title: currentListTitle!) else {
@@ -93,11 +62,8 @@ func addRowToEnd() {
     }
 }
 
-//добавление первой строки товара
+/// добавление в талицу цен первой строки товара
 func addRowToStart() {
-//    if (pricesArray[0].count == 0) {
-//        pricesArray.append([Double?](repeating: 0.00, count: placesListCount()))
-//    }
     pricesArray.insert([Double?](repeating: 0.00, count: placesListCount()), at: 0)
     if (currentListTitle != nil) {
         guard saveList(title: currentListTitle!) else {
@@ -106,6 +72,7 @@ func addRowToStart() {
     }
 }
 
+/// Удалить из таблицы цен строку
 func removeRow(at index : Int) {
     pricesArray.remove(at: index)
     sumArray.remove(at: index)
@@ -122,7 +89,7 @@ func addColumnToEnd() {
     if (pricesArray.count == 0) {
         pricesArray.append([Double?](repeating: 0.00, count: placesListCount()))
     }
-    for i in 0..<testListCount() {
+    for i in 0..<buyListCount() {
         pricesArray[i].append(0.00)
     }
     sumArray.append(0.00)
@@ -133,12 +100,12 @@ func addColumnToEnd() {
     }
 }
 
-//добавление первого столбца магазина
+/// добавление первого столбца магазина
 func addColumnToStart() {
     if (pricesArray.count == 0) {
         pricesArray.append([Double?](repeating: 0.00, count: placesListCount()))
     }
-    for i in 0..<testListCount() {
+    for i in 0..<buyListCount() {
         pricesArray[i].insert(0.00, at: 0)
     }
     sumArray.insert(0.00, at: 0)
@@ -149,8 +116,9 @@ func addColumnToStart() {
     }
 }
 
+/// Удаление столбца из таблицы цен
 func removeColumn(at index : Int) {
-    for i in 0..<testListCount() {
+    for i in 0..<buyListCount() {
         pricesArray[i].remove(at: index)
     }
     sumArray.remove(at: index)
@@ -161,14 +129,13 @@ func removeColumn(at index : Int) {
     }
 }
 
+/// пересчет суммы в столбцах
 func sumPrices() {
-    //pricesArray = [[Double?]](repeating: [Double?](repeating: 0.0, count: placesListCount()), count: testListCount())
-    
     sumArray = [Double?](repeating: 0.00, count: placesListCount())
     for i in 0..<placesListCount() {
         var summ = 0.00
         
-        for j in 0..<testListCount() {
+        for j in 0..<buyListCount() {
             summ += pricesArray[j][i] ?? 0.00
         }
         sumArray[i]=summ
@@ -182,18 +149,17 @@ func sumPrices() {
 
 //MARK: -Работа с сохраненными данными
 
+/// сохранение списка, вывод Bool необходим в будущем,
+/// чтобы проверять, что сохранение прошло успешно.
+/// True – сохранилось
 func saveList(title : String) -> Bool {
     let savedList = SavedList()
-    savedList.testArray = testList
+    savedList.testArray = buyList
     savedList.placesArray = placesList
     savedList.pricesArray = pricesArray
     
-//    guard !checkIfSavedListTitleEmpty(title: title) else {
-//        print("занято")
-//        return false
-//    }
     if let encoded = try? JSONEncoder().encode(savedList) {
-        UserDefaults.standard.set(encoded, forKey: currentListTitle ?? "g")
+        UserDefaults.standard.set(encoded, forKey: currentListTitle ?? "sample")
         UserDefaults.standard.synchronize()
     }
     return true
@@ -252,7 +218,7 @@ func setSavedLists(title : String) {
     list.append(title) //добавить к списку новое название
     object.mList = list
     
-    //Сохранили
+    //Сохранить
     if let encoded = try? JSONEncoder().encode(object) {
         UserDefaults.standard.set(encoded, forKey: savedListsKey)
         UserDefaults.standard.synchronize()
@@ -315,13 +281,23 @@ func changeTitleList(oldTitle : String, newTitle : String) -> Bool {
     
 }
 
-func testListCount() -> Int {
-    return getTestList().count
+// MARK: - методы подсчета чистых массивов
+/*
+ Выводят и считают массивы без пустого значение
+ Пустое значение появляется, когда происходит добавление
+ нового элемента в спсики названий но еще без самого названия
+ */
+
+/// выводит размер массива покупок без пустых значений
+func buyListCount() -> Int {
+    return getbuyList().count
 }
 
-func getTestList() -> [String] {
+
+/// выводит массив покупок без пустых значений
+func getbuyList() -> [String] {
     var k = [String]()
-    for i in testList {
+    for i in buyList {
         if i != "" {
             k.append(i)
         }
@@ -330,10 +306,12 @@ func getTestList() -> [String] {
     return k
 }
 
+/// выводит размер массива магазинов без пустых значений
 func placesListCount() -> Int {
     return getPlacesList().count
 }
 
+/// выводит массив магазинов без пустых значений
 func getPlacesList() -> [String] {
     var k = [String]()
     for i in placesList {
@@ -345,28 +323,27 @@ func getPlacesList() -> [String] {
     return k
 }
 
+/// Класс для сохранения структуры списка в долгую память
 class SavedList : Codable {
     var testArray: [String]?
     var placesArray : [String]?
     var pricesArray : [[Double?]]?
 }
 
+/// Класс для сохранения списка названий
 class SavedListTitles : Codable {
     var mList : [String]?
 }
 
-func showBuyTitleFirstTime() {
-    //if first
-    
-}
 
+//func initialEmpty() {
+//    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceTitle"), object: nil)
+//    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceTop"), object: nil)
+//    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceBottom"), object: nil)
+//}
 
-func initialEmpty() {
-    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceTitle"), object: nil)
-    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceTop"), object: nil)
-    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceBottom"), object: nil)
-}
-
+/// проверяет, запущено ли приложение в первый раз
+/// Если да – сохраняет значение в память
 func firstStartApp() {
     if (!UserDefaults.standard.bool(forKey: "firstStart")) {
         isFirstStart = true

@@ -1,14 +1,11 @@
 //
 //  MainTableViewController.swift
 //  Match prices
-//
-//  Created by Евгений Конев on 08.02.2020.
-//  Copyright © 2020 Nolit. All rights reserved.
-//
 
 import UIKit
 
-var isFIrstSectionVisible = false
+//
+//var isFIrstSectionVisible = false
 
 //секция – области главной таблицы
 
@@ -24,10 +21,6 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
     
     var timerBuyTitle : Timer?
     var timerPlaceTitle : Timer?
-    var currentBuyTitle : String = "Добавьте товары"
-    var currentPlacesTitle : String = "Добавьте магазины"
-    let list = ["товары2", "наименования", "услуги", "материалы", "лекарства", "продукты", "ингредиенты", "товары"]
-    let placesListTitles = ["магазины", "аптеки", "исполнители", "продавцы", "мастерские", "магазины"]
     
     var cell = UITableViewCell() //ячейка главной таблицы
     
@@ -49,8 +42,6 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
         NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "updateLists"), object: nil) //обновить списки
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDataCollection), name: NSNotification.Name(rawValue: "reloadDataCollection"), object: nil) //обновить таблицу цен
         
-        
-        // NEW
         NotificationCenter.default.addObserver(self, selector: #selector(addBuyTop), name: NSNotification.Name(rawValue: "addBuyTop"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(addBuyBottom), name: NSNotification.Name(rawValue: "addBuyBottom"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(addPlaceTop), name: NSNotification.Name(rawValue: "addPlaceTop"), object: nil)
@@ -58,42 +49,32 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
         
         NotificationCenter.default.addObserver(self, selector: #selector(scheduledTimerWithTimeIntervalV2), name: NSNotification.Name(rawValue: "scheduledTimerWithTimeIntervalV2"), object: nil)
         
+        
+        // проверка, что запуск первый раз
         if (isFirstStart) {
+            // если да – запуск счетчика для отображение заголовка продуктов
             scheduledTimerWithTimeInterval()
         }
         
         self.setupToHideKeyboardOnTapOnView() // установка слушателя: при нажатии вне текстового поля – скрыть клавиатуру
         self.navigationItem.title = currentListTitle // установка названия текущего списка
-        // подгрузка начальных тестовых данных
         
+        // проверка, это новый список или сохраненный
+        // установка названия
         if (currentListTitle != nil) {
             self.navigationItem.title = currentListTitle
         } else {
             self.navigationItem.title = "Новый список"
         }
+        // установка кнопок справа в навигационной панели
         let navBarSavedListsButton = UIBarButtonItem.init(image: UIImage(systemName: "bookmark.fill"), style: .done, target: self, action: #selector(navBarSavedListsButtonAction))
         let navBarOptionsButton = UIBarButtonItem.init(image: UIImage(systemName: "doc.fill"), style: .done, target: self, action: #selector(navBarOptionsButtonAction))
         self.navigationItem.rightBarButtonItems = [navBarSavedListsButton, navBarOptionsButton]
         tableView.setEditing(true, animated: false)
         tableView.allowsSelectionDuringEditing = true
-        
-//        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
-//        longPressGesture.minimumPressDuration = 0.5
-//        self.tableView.addGestureRecognizer(longPressGesture)
-        
-        
     }
     
-//    @objc func handleLongPress(longPressGesture: UILongPressGestureRecognizer) {
-//        let p = longPressGesture.location(in: self.tableView)
-//        let indexPath = self.tableView.indexPathForRow(at: p)
-//        if indexPath == nil {
-//            print("Long press on table view, not row.")
-//        } else if longPressGesture.state == UIGestureRecognizer.State.began {
-//            print("Long press on row, at \(indexPath!.row)")
-//        }
-//    }
-    
+    // настройка действия для перехода в список сохранных названий
     @objc func navBarSavedListsButtonAction() {
         let VC1 = self.storyboard!.instantiateViewController(withIdentifier: "SavedListsTableView") as! SavedListsTableView
         VC1.delegate = self
@@ -101,6 +82,7 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
         self.present(navController, animated:true, completion: nil)
     }
     
+    // назвачение действия для кнопки настроек (изменить название или сохдать новый список)
     @objc func navBarOptionsButtonAction() {
         createAlertItem()
     }
@@ -117,15 +99,19 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
         return 9
     }
     
+    // настройка создание алерта для изменения названия
     private func changeTitle() {
         let alertSaveList = UIAlertController(title: "Изменить название списка", message: nil, preferredStyle: .alert)
+        // добавить текстовое поле
         alertSaveList.addTextField { (textField) in
             textField.placeholder = "Новое название списка..."
         }
         
+        // действие "ОК", попытаться сохранить изменение
         let okAction = UIAlertAction(title: "Ok", style: .default, handler: { (action) in
             let title = alertSaveList.textFields![0].text?.trimmingCharacters(in: .whitespacesAndNewlines)
             guard !title!.isEmpty else {
+                // проверка, если название пустое
                 let alertShowError = UIAlertController(title: "Ошибка", message: "Название не должно быть пустым", preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "Ok", style: .default)
                 alertShowError.addAction(okAction)
@@ -133,6 +119,7 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
                 return
             }
             
+            // проверка, что такое название уже существует
             guard checkIfSavedListTitleEmpty(title: title!) else {
                 let alertShowError = UIAlertController(title: "Ошибка", message: "Список с таким названием уже существует", preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "Ok", style: .default)
@@ -141,27 +128,33 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
                 return
             }
             
+            // изменить название
+            // если удачно – меняем название экрана вверху
             if (changeTitleList(oldTitle: currentListTitle!, newTitle: title!)) {
                 self.navigationItem.title = currentListTitle
             } else {
+                // если неудача – вывод сообщения об ошибке
                 let alertShowError = UIAlertController(title: "Ошибка", message: nil, preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "Ok", style: .default)
                 alertShowError.addAction(okAction)
                 self.present(alertShowError, animated: true, completion: nil)
             }
             
+            // сохранить данные в память
             guard saveList(title: currentListTitle!) else {
                 return
             }
+            
         })
-        alertSaveList.addAction(okAction)
-        
+        // действие "отмена" - закрытие меню
         let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
-        
+        // добавить действие в меню
+        alertSaveList.addAction(okAction)
         alertSaveList.addAction(cancelAction)
         self.present(alertSaveList, animated: true, completion: nil)
     }
     
+    // показывать клавиатуру при добавлении нового элемента в список
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell2 = cell as? AddBuyListSection {
             if (cell2.title.text == "") {
@@ -177,6 +170,7 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
     
     //MARK:- Редактирование списоков
     
+    // разрешить редактирование ячеек (кнопка перемещения появляется)
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         if indexPath.section == 2 {
             return true // список покупок (товаров)
@@ -187,22 +181,25 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
         return false
     }
     
+    // не выводить внешне режим редактирования
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return .none
     }
+    
     
     override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
         return false
     }
     
-    // Override to support rearranging the table view.
+    // перемещение данных в списках
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
         
+        // для второй секции (список продуктов)
         if (fromIndexPath.section == 2) {
             //поменять строки в списке покупок местами
-            let from = testList[fromIndexPath.row]
-            testList.remove(at: fromIndexPath.row)
-            testList.insert(from, at: to.row)
+            let from = buyList[fromIndexPath.row]
+            buyList.remove(at: fromIndexPath.row)
+            buyList.insert(from, at: to.row)
             
             //поменять строки цен местами
             let fromPrice = pricesArray[fromIndexPath.row]
@@ -217,16 +214,17 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
             }
             collectionViewPrices?.reloadData()
         }
+        // для второй секции (список магазинов)
         if (fromIndexPath.section == 6) {
             
-            //меняем местами строки
+            //меняем местами строки в списке
             let from = placesList[fromIndexPath.row]
             placesList.remove(at: fromIndexPath.row)
             placesList.insert(from, at: to.row)
             
             
             //меняем местами столбцы суммы
-            for i in 0..<testListCount() {
+            for i in 0..<buyListCount() {
                 let first = pricesArray[i][fromIndexPath.row]
                 pricesArray[i].remove(at: fromIndexPath.row)
                 pricesArray[i].insert(first, at: to.row)
@@ -245,10 +243,11 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
     
     
     
-    // Override to support conditional rearranging of the table view.
+    // разрешить перемещение ячеек (запретить перемещение в другую секцию)
+    // запретить перемещение пустых ячеек
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the item to be re-orderable.
-        if (indexPath.section == 2 && (testList[0] == "" || testList[indexPath.row] == "")) {
+        if (indexPath.section == 2 && (buyList[0] == "" || buyList[indexPath.row] == "")) {
             return false
         }
         if (indexPath.section == 6 && (placesList[0] == "" || placesList[indexPath.row] == "")) {
@@ -270,7 +269,7 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
     // в секциях, где списки – размер этих списков
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 2 {
-            return testList.count // список покупок (товаров)
+            return buyList.count // список покупок (товаров)
         }
         if section == 6 {
             return placesList.count // список магазинов
@@ -308,13 +307,9 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
         // Список покупок (товаров)
         case 2: do {
             let mCell = tableView.dequeueReusableCell(withIdentifier: "cellAddBuyListSection", for: indexPath) as! AddBuyListSection
-            // mCell.separatorInset = UIEdgeInsets(top: 0, left: cell.bounds.size.width, bottom: 0, right: 0);
             mCell.selectionStyle = UITableViewCell.SelectionStyle.none;
-            mCell.title.text = testList[indexPath.row]
+            mCell.title.text = buyList[indexPath.row]
             mCell.title.item = PosTextField(row: indexPath.row)
-//            mCell.title.delegate = self
-//            mCell.title.becomeFirstResponder()
-            //mCell.title.addGestureRecognizer(gesture!)
             
             cell = mCell
             }
@@ -334,10 +329,12 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
             let mCell = tableView.dequeueReusableCell(withIdentifier: "cellAddPlaceTitle", for: indexPath) as! AddPlaceTitleSection
             mCell.selectionStyle = UITableViewCell.SelectionStyle.none;
             mCell.separatorInset = UIEdgeInsets(top: 0, left: cell.bounds.size.width, bottom: 0, right: 0);
-            if (testList.count != 0) {
+            // показать заголовок и сделать видимым полностью (не прозрачным)
+            if (buyList.count != 0) {
                 mCell.title.isHidden = false
                 mCell.title.isEnabled = true
             }
+            // установить название блока магазинов
             mCell.title.text = currentPlacesTitle
             cell = mCell
             }
@@ -353,7 +350,6 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
         case 6: do {
             let mCell = tableView.dequeueReusableCell(withIdentifier: "cellAddPlaceListSection", for: indexPath) as! AddPlaceListSection
             mCell.selectionStyle = UITableViewCell.SelectionStyle.none;
-            // mCell.separatorInset = UIEdgeInsets(top: 0, left: cell.bounds.size.width, bottom: 0, right: 0);
             mCell.title.text = placesList[indexPath.row]
             mCell.title.item = PosTextField(row: indexPath.row)
             cell = mCell
@@ -377,7 +373,8 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
                 collectionViewPrices!.delegate = self
                 
             }
-            if (testListCount() != 0 && placesListCount() != 0) {
+            // скрываем или показываем таблицу, если оба списка не пусные – показываем
+            if (buyListCount() != 0 && placesListCount() != 0) {
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showPriceSheet"), object: nil)
             } else {
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePriceSheet"), object: nil)
@@ -403,7 +400,7 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
     
     // сколько по высоте
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return testListCount()+2 // +2, так как размер списка + строка сверху на колонки + строка снизу на итоговую сумму
+        return buyListCount()+2 // +2, так как размер списка + строка сверху на колонки + строка снизу на итоговую сумму
     }
     
     // назначение данных для отображения в конкретных строках
@@ -417,8 +414,8 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
         //первая колонка
         //row - строка
         //1я колонка
-        if (indexPath.row == 0 && indexPath.section >= 1 && indexPath.section <= testListCount()) {
-            mCell.label.text = getTestList()[indexPath.section-1]
+        if (indexPath.row == 0 && indexPath.section >= 1 && indexPath.section <= buyListCount()) {
+            mCell.label.text = getbuyList()[indexPath.section-1]
             mCell.label.isHidden = false
             mCell.label.textAlignment = .left
             mCell.textFieldCell.isHidden = true
@@ -432,7 +429,7 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
             mCell.textFieldCell.isHidden = true
         }
         // сумма, последняя строка
-        if (indexPath.section == testListCount()+1 && indexPath.row > 0) {
+        if (indexPath.section == buyListCount()+1 && indexPath.row > 0) {
             mCell.label.isHidden = false
             mCell.textFieldCell.isHidden = true
             mCell.label.textAlignment = .center
@@ -451,7 +448,7 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
             mCell.textFieldCell.isHidden = true
         }
         // ячейка "сумма", последняя строка, первый столбец
-        if (indexPath.row == 0 && indexPath.section == testListCount()+1) {
+        if (indexPath.row == 0 && indexPath.section == buyListCount()+1) {
             mCell.label.isHidden = false
             mCell.textFieldCell.isHidden = true
             mCell.label.textAlignment = .left
@@ -459,8 +456,8 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
         }
         
         // ячейки с числами
-        if (indexPath.row != 0 && indexPath.section != 0 && indexPath.section <= testListCount() && indexPath.row <= placesListCount()) {
-//            mCell.textFieldCell.text = "\(indexPath)"
+        if (indexPath.row != 0 && indexPath.section != 0 && indexPath.section <= buyListCount() && indexPath.row <= placesListCount()) {
+//            mCell.textFieldCell.text = "\(indexPath)" текущие номера ячеек таблицы
             let a = pricesArray[indexPath.section-1][indexPath.row-1]
             if (a == nil || a == 0.00) {
                 mCell.textFieldCell.text = ""
@@ -478,28 +475,14 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
             mCell.label.isHidden = true
             mCell.textFieldCell.item = MiniCell(row: indexPath.section-1, column: indexPath.row-1)
             
-            //let item = a
-            //mCell.textField.item = item
         }
         
         return mCell
     }
     
-    //    MARK:- сохранение значения в списках
+    //    MARK:- сохранение значения в ячейках талицы цен
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if let textField = textField as? BuyListTextField  {
-            let row = textField.item!.row
-            let res = textField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-            
-            if (!res.isEmpty) {
-                
-                testList[row] = res
-                tableView.reloadData()
-                sumPrices()
-                reloadDataCollection()
-                
-            }
-        }
+    
         
         if let textField = textField as? DictionaryTextField  {
             let row = textField.item!.row
@@ -541,42 +524,34 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
     }
     
     
-    //   func collectionViewCell(textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String, delegatedFrom cell: PriceSheetCell)  -> Bool {
-    //       print("Validation action in textField from cell: \(String(describing: collectionViewPrices!.indexPath(for: cell)))")
-    //       return true
-    //   }
-    
-    //MARK:- конец таблицы цен
-    
-    
     // MARK:- Удаление из списков
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        //Удаление из списка покупок
-        if editingStyle == .delete && indexPath.section == 2 {
-            testList.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            removeRow(at: indexPath.row)
-            showHideBuyTopTitle()
-            showHideBuyBottom()
-//            showHidePlaces()
-            showHidePriceSheet()
-            reloadDataCollection()
-//            showHidePlacesTitle()
-        }
-        //Удаление из списка магазинов
-        if editingStyle == .delete && indexPath.section == 6 {
-            placesList.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            showHidePriceSheet()
-            reloadDataCollection()
-            //showHidePlaces()
-        }
-    }
+//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//        //Удаление из списка покупок
+//        if editingStyle == .delete && indexPath.section == 2 {
+//            buyList.remove(at: indexPath.row)
+//            tableView.deleteRows(at: [indexPath], with: .fade)
+//            removeRow(at: indexPath.row)
+//            showHideBuyTopTitle()
+//            showHideBuyBottom()
+////            showHidePlaces()
+//            showHidePriceSheet()
+//            reloadDataCollection()
+////            showHidePlacesTitle()
+//        }
+//        //Удаление из списка магазинов
+//        if editingStyle == .delete && indexPath.section == 6 {
+//            placesList.remove(at: indexPath.row)
+//            tableView.deleteRows(at: [indexPath], with: .fade)
+//            showHidePriceSheet()
+//            reloadDataCollection()
+//            //showHidePlaces()
+//        }
+//    }
     
     
-    
+    // скрыть или показать элементы главного экрана
     func showHideBuyTopTitle() {
-        if (testList.count == 0) {
+        if (buyList.count == 0) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showBuyTopTitle"), object: nil)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enableBuyTopButton"), object: nil)
         } else {
@@ -585,14 +560,14 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
     }
     
     func showHidePriceSheet() {
-        if (placesList.count == 0 || testList.count == 0) {
+        if (placesList.count == 0 || buyList.count == 0) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePriceSheet"), object: nil)
         }
     }
     
     /// Показывать или скрывать элементы нижней секции добавления покупок
     func showHideBuyBottom() {
-        if (testList.count) == 0 {
+        if (buyList.count) == 0 {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hideBuyBottomButton"), object: nil)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hideBuyTextField"), object: nil)
         } else {
@@ -602,7 +577,7 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
     }
     
     func showHidePlaces() {
-        if (testList.count == 0) {
+        if (buyList.count == 0) {
 //            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceBottom"), object: nil)
             //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceTopButton"), object: nil)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceList"), object: nil)
@@ -620,18 +595,11 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
     }
     
     func showHidePlacesTitle() {
-        if (testList.count == 0) {
+        if (buyList.count == 0) {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceTitle"), object: nil)
         } else {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showPlaceTitle"), object: nil)
         }
-    }
-    
-    //MARK:- нажатие по элементам (click)
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        if (indexPath.section == 2 || indexPath.section == 6) {
-//            showItemAlert(at: indexPath.row, section: indexPath.section, indexPath: indexPath)
-//        }
     }
     
     func showItemAlert(at index : Int, section : Int, indexPath : IndexPath) {
@@ -643,7 +611,7 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
             alertSaveList.addTextField { (textField) in
                 
                 if (section == 2) {
-                    textField.placeholder = testList[index] + "..."
+                    textField.placeholder = buyList[index] + "..."
                 }
                 if (section == 6) {
                     textField.placeholder = placesList[index] + "..."
@@ -662,7 +630,7 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
                 }
                 
                 if (section == 2) {
-                    testList[index] = title!
+                    buyList[index] = title!
                 }
                 if (section == 6) {
                     placesList[index] = title!
@@ -688,15 +656,13 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
         })
         let actionRemove = UIAlertAction(title: "Удалить", style: .default, handler: {action in
             if section == 2 {
-                testList.remove(at: index)
+                buyList.remove(at: index)
                 self.tableView.deleteRows(at: [indexPath], with: .fade)
                 removeRow(at: index)
                 self.showHideBuyTopTitle()
                 self.showHideBuyBottom()
-//                self.showHidePlaces()
                 self.showHidePriceSheet()
                 self.reloadDataCollection()
-//                self.showHidePlacesTitle()
             }
             //Удаление из списка магазинов
             if section == 6 {
@@ -704,7 +670,6 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
                 self.tableView.deleteRows(at: [indexPath], with: .fade)
                 self.showHidePriceSheet()
                 self.reloadDataCollection()
-                //showHidePlaces()
             }
         })
         let cancelAction = UIAlertAction(title: "Отменить", style: .cancel)
@@ -773,7 +738,7 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
         let createNewListAction = UIAlertAction(title: "Создать новый список", style: .default, handler: {(action) in
             currentListTitle = nil
             setCurrentListTitle()
-            testList.removeAll()
+            buyList.removeAll()
             placesList.removeAll()
             pricesArray.removeAll()
             self.showHidePlaces()
@@ -803,7 +768,7 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
     
     //MARK: - новые методы
     @objc func addBuyTop() {
-        testList.insert("", at: 0)
+        buyList.insert("", at: 0)
         tableView.reloadData()
         sumPrices()
 //        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enableBuyTopButton"), object: nil)
@@ -814,7 +779,7 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
     
     
     @objc func addBuyBottom() {
-        testList.insert("", at: testListCount())
+        buyList.insert("", at: buyListCount())
         self.tableView.reloadData()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "disableBuyBottomButton"), object: nil)
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "disableBuyTopButton"), object: nil)
@@ -881,38 +846,6 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
         }
     }
     
-    //MARK: - Alert remove
-//    @objc func showMenuRemove(index : Int, section : Int) {
-//        let optionMenu = UIAlertController(title: nil, message: "Выберите действие", preferredStyle: .actionSheet)
-//
-//
-//        let actionRemove = UIAlertAction(title: "Удалить", style: .default, handler: {action in
-//            if section == 2 {
-//                testList.remove(at: index)
-//                removeRow(at: index)
-//                self.showHideBuyTopTitle()
-//                self.showHideBuyBottom()
-//                //                self.showHidePlaces()
-//                self.showHidePriceSheet()
-//                self.reloadDataCollection()
-//                //                self.showHidePlacesTitle()
-//            }
-//            //Удаление из списка магазинов
-//            if section == 6 {
-//                placesList.remove(at: index)
-//                removeColumn(at: index)
-//                self.showHidePriceSheet()
-//                self.reloadDataCollection()
-//                //showHidePlaces()
-//            }
-//        })
-//        let cancelAction = UIAlertAction(title: "Отменить", style: .cancel)
-//        optionMenu.addAction(actionRemove)
-//        optionMenu.addAction(cancelAction)
-//        present(optionMenu, animated: true, completion: nil)
-//    }
-//
-    
     
 }
 
@@ -937,31 +870,10 @@ extension UITableViewController
     
     @objc func removeBuyEmpty() {
         self.dismissKeyboard()
-//        if (testList.count > 0) {
-//            if (testList[0] == "") {
-//                testList.remove(at: 0)
-//                self.tableView.reloadData()
-//            } else
-//            if (testList[testList.count-1] == "") {
-//                testList.remove(at: testList.count-1)
-//                self.tableView.reloadData()
-//            }
-//        }
-//        if (placesList.count > 0) {
-//            if (placesList[0] == "") {
-//                placesList.remove(at: 0)
-//                self.tableView.reloadData()
-//            } else
-//            if (placesList[placesList.count-1] == "") {
-//                placesList.remove(at: placesList.count-1)
-//                self.tableView.reloadData()
-//            }
-//        }
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enableBuyTopButton"), object: nil)
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enableBuyBottomButton"), object: nil)
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enablePlaceTopButton"), object: nil)
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enablePlaceBottomButton"), object: nil)
-//        becomeFirstResponder()
     }
     
     

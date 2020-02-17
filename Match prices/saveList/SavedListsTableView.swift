@@ -127,15 +127,15 @@ extension ViewController : PickNewList {
             
             
             // Очищаем массивы
-            testList.removeAll()
+            buyList.removeAll()
             placesList.removeAll()
             pricesArray.removeAll()
             
             // задаем новые списки
             let list = getSavedList(title: title)
-            testList = list?.testArray ?? [String]()
+            buyList = list?.testArray ?? [String]()
             placesList = list?.placesArray ?? [String]()
-            pricesArray = list?.pricesArray ?? [[Double?]](repeating: [Double?](repeating: 0.0, count: placesList.count), count: testListCount())
+            pricesArray = list?.pricesArray ?? [[Double?]](repeating: [Double?](repeating: 0.0, count: placesList.count), count: buyListCount())
             
             
             self.showHidePlaces()

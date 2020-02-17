@@ -26,48 +26,16 @@ class AddBuyBottomSection: UITableViewCell, UITextFieldDelegate {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Инициализация
-//        NotificationCenter.default.addObserver(self, selector: #selector(addNewItemOnTop), name: NSNotification.Name(rawValue: "addToBuyList"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(showBottomAddButton), name: NSNotification.Name(rawValue: "showBuyBottomButton"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(hideBottomAddButton), name: NSNotification.Name(rawValue: "hideBuyBottomButton"), object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(showKeyboard), name: NSNotification.Name(rawValue: "showBuyKeyboardFirst"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(enableBuyBottomButton), name: NSNotification.Name(rawValue: "enableBuyBottomButton"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(disableBuyBottomButton), name: NSNotification.Name(rawValue: "disableBuyBottomButton"), object: nil)
-        
-        
-        
-        // назначение свойств текстовому полю
-//        textField.addTarget(self, action: #selector(textFieldDidChange), for: UIControl.Event.editingChanged)
-//        textField.addTarget(self, action: #selector(textFieldShouldReturn), for: UIControl.Event.editingDidEndOnExit)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
-    
-    
-    /// Добавление нового элемента в начало списка покупок
-//    @objc func addNewItemOnTop() {
-//        // проверка, что введено не пустое значение, также удаляются пробелы в начале
-//        // и конце строки
-//        let item = (textField.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
-//        if (!item.isEmpty) {
-//            // Добавление элемента в начало списка покупок (данные)
-//            testList.insert("\(item)", at: 0)
-//            // Добавление элемента в начало списка покупок (внешка)
-//            addRowToStart()
-//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateLists"), object: nil)
-//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "disableBuyTopButton"), object: nil)
-//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadDataCollection"), object: nil)
-//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showPriceSheet"), object: nil)
-//            AddBuyBottomButtonOutlet.isEnabled = false
-//            textField.text = ""
-//        }
-//
-//    }
-    
     
     /// Назначение текстовому полю отслеживателя при вводе текста
     ///  Если в поле есть символы – кнопки добавления становятся активны
@@ -82,54 +50,6 @@ class AddBuyBottomSection: UITableViewCell, UITextFieldDelegate {
         }
     }
     
-    /// Добавление элемента в конец списка покупок
-//    private func addItemToBottom() {
-//        guard textField.text != nil else {
-//            return
-//        }
-//
-//        // проверка, что введенное значение не пустое
-//        let item = (textField.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
-//        if (!item.isEmpty) {
-//            testList.append("\(item)")
-//            addRowToEnd()
-//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateLists"), object: nil)
-//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "disableBuyTopButton"), object: nil)
-//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enableTextFieldPlaceBottom"), object: nil)
-//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showPlaceTopButton"), object: nil)
-//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadDataCollection"), object: nil)
-//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showPriceSheet"), object: nil)
-//            AddBuyBottomButtonOutlet.isEnabled = false
-//            textField.text = ""
-//        }
-//    }
-    
-    
-    /// Обработка нажатия кнопки "return"
-    /// - Parameter textField: поле ввода названия продукта
-//    @objc func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        let text = (textField.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
-//        if (text.isEmpty && testListCount() == 0) {
-//            textField.isHidden = true
-//            AddBuyBottomButtonOutlet.isHidden = true
-//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showBuyTopTitle"), object: nil)
-//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enableBuyTopButton"), object: nil)
-//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceBottom"), object: nil)
-//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceTopButton"), object: nil)
-//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceList"), object: nil)
-//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceTitle"), object: nil)
-//
-//
-//        }  else if text.isEmpty {
-//            textField.text = ""
-//        } else {
-//            addItemToBottom()
-//            //addRow()
-//        }
-//
-//        return false
-//    }
-    
     @objc func enableBuyBottomButton() {
         AddBuyBottomButtonOutlet.isEnabled = true
     }
@@ -137,17 +57,6 @@ class AddBuyBottomSection: UITableViewCell, UITextFieldDelegate {
     @objc func disableBuyBottomButton() {
         AddBuyBottomButtonOutlet.isEnabled = false
     }
-    
-    
-//    /// показать текстовое поле
-//    @objc func showTextField() {
-//        textField.isHidden = false
-//    }
-//
-//    /// скрыть текстовое поле
-//    @objc func hideTextField() {
-//        textField.isHidden = true
-//    }
     
     /// показать нижнюю кнопку добавления
     @objc func showBottomAddButton() {
@@ -159,12 +68,5 @@ class AddBuyBottomSection: UITableViewCell, UITextFieldDelegate {
     @objc func hideBottomAddButton() {
         AddBuyBottomButtonOutlet.isHidden = true
     }
-   
-    /// показать клавиаутуру
-    /// вызывается в первый раз, когда происходит самое первое заполнение списков
-//    @objc func showKeyboard() {
-//        textField.becomeFirstResponder()
-//    }
-    
 
 }

@@ -24,14 +24,9 @@ class AddPlaceTopSection: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
         
-//        addPlaceTopButtonOutlet.isEnabled = false
-//        if (currentListTitle == nil) {
-//            addPlaceTopButtonOutlet.isHidden = true
-//        }
         title.isHidden = true
-        if (testList.count == 0) {
+        if (buyList.count == 0) {
             addPlaceTopButtonOutlet.isHidden = true
         } else {
             addPlaceTopButtonOutlet.isHidden = false

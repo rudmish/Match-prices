@@ -13,8 +13,6 @@ import UIKit
 class PriceSheet: UITableViewCell {
 
     override func prepareForReuse() {
-//      arrImges.removeAll()
-    
       NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadDataCollection"), object: nil)
     }
     
@@ -37,8 +35,6 @@ class PriceSheet: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
     /// скрыть показать таблицу

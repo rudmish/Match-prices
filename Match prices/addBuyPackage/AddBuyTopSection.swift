@@ -37,8 +37,6 @@ class AddBuyTopSection: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        //        addBuyTopButtonOutlet.isEnabled = false
-        
         //Назначение отслеживающих для вызова из другого класса
         NotificationCenter.default.addObserver(self, selector: #selector(enableButton), name: NSNotification.Name(rawValue: "enableBuyTopButton"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(disableButton), name: NSNotification.Name(rawValue: "disableBuyTopButton"), object: nil)

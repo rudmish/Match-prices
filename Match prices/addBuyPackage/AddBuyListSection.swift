@@ -43,23 +43,9 @@ class AddBuyListSection: UITableViewCell, UITextFieldDelegate {
                 let optionMenu = UIAlertController(title: nil, message: "Выберите действие", preferredStyle: .actionSheet)
                
                 let actionRemove = UIAlertAction(title: "Удалить", style: .default, handler: {action in
-    //                if section == 2 {
-    //                    testList.remove(at: index)
-    //                    self.tableView.deleteRows(at: [indexPath], with: .fade)
-    //                    removeRow(at: index)
-    //                    self.showHideBuyTopTitle()
-    //                    self.showHideBuyBottom()
-    //                    //                self.showHidePlaces()
-    //                    self.showHidePriceSheet()
-    //                    self.reloadDataCollection()
-    //                    //                self.showHidePlacesTitle()
-    //                }
-                    //Удаление из списка магазинов
-    //                if section == 6 {
-                    testList.remove(at: self.title.item!.row)
+                    buyList.remove(at: self.title.item!.row)
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateLists"), object: nil)
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadDataCollection"), object: nil)
-//                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceBottom"), object: nil)
                     isAlertRemoveBuyOpen = false
                 })
                 let cancelAction = UIAlertAction(title: "Отменить", style: .cancel, handler: {action in
@@ -104,14 +90,14 @@ class AddBuyListSection: UITableViewCell, UITextFieldDelegate {
             if (!res.isEmpty && row != nil) {
                 
                 // Если добавляем в конец
-                if (row == testList.count-1) {
-                    testList[row!] = res
+                if (row == buyList.count-1) {
+                    buyList[row!] = res
                     addRowToEnd()
                 } else if (row == 0) {
-                    testList[row!] = res
+                    buyList[row!] = res
                     addRowToStart()
                 } else {
-                    testList[row!] = res
+                    buyList[row!] = res
                 }
                 
                 sumPrices()
@@ -122,20 +108,17 @@ class AddBuyListSection: UITableViewCell, UITextFieldDelegate {
                 }
                 
             } else {
-                if (testList.count > 0) {
-                    if (testList[0] == "") {
-                        testList.remove(at: 0)
-                        removeRow(at: 0)
+                if (buyList.count > 0) {
+                    if (buyList[0] == "") {
+                        buyList.remove(at: 0)
                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateLists"), object: nil)
                     } else {
-                        if (testList[testList.count-1] == "") {
-                            testList.remove(at: testList.count-1)
-                            removeRow(at: testList.count-1)
+                        if (buyList[buyList.count-1] == "") {
+                            buyList.remove(at: buyList.count-1)
                             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateLists"), object: nil)
                         } else
                             if (textField.text == "") {
-                                testList.remove(at: textField.item!.row)
-                                removeRow(at: textField.item!.row)
+                                buyList.remove(at: textField.item!.row)
                                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateLists"), object: nil)
                                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadDataCollection"), object: nil)
                         }
@@ -159,11 +142,11 @@ class AddBuyListSection: UITableViewCell, UITextFieldDelegate {
             let res = textField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             //let text = (textField.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
             if (!res.isEmpty && row != nil) {
-                if (row == testList.count-1) {
-                    testList[row!] = res
+                if (row == buyList.count-1) {
+                    buyList[row!] = res
                     addRowToEnd()
                 } else if (row == 0) {
-                    testList[row!] = res
+                    buyList[row!] = res
                     addRowToStart()
                 }
                 sumPrices()
@@ -172,10 +155,13 @@ class AddBuyListSection: UITableViewCell, UITextFieldDelegate {
                 textField.endEditing(true)
                 
             } else {
-                if (testListCount() == 0) {
+                if (buyListCount() == 0) {
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceTopButton"), object: nil)
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceTitle"), object: nil)
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceBottom"), object: nil)
+                } else {
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enableBuyTopButton"), object: nil)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enableBuyBottomButton"), object: nil)
                 }
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateLists"), object: nil)
                 textField.endEditing(true)
