@@ -1,0 +1,6 @@
+framework module Pods_Match_pricesTests {
+  umbrella header "Pods-Match pricesTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
