@@ -68,6 +68,32 @@ class AddPlaceListSection: UITableViewCell, UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
+        saveRes(textField: textField)
+        
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        if (textField.text!.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty) {
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "disablePlaceTopButton"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "disablePlaceBottomButton"), object: nil)
+        } else {
+            if (buyListCount() != 0) {
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enablePlaceTopButton"), object: nil)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enablePlaceBottomButton"), object: nil)
+            }
+        }
+    }
+    
+    
+    
+    @objc func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        textField.endEditing(true)
+        
+        return false
+    }
+    
+    private func saveRes(textField : UITextField) {
         if let textField = textField as? PlaceListTextField  {
             let row = textField.item?.row
             let res = textField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -136,6 +162,7 @@ class AddPlaceListSection: UITableViewCell, UITextFieldDelegate {
                         } else
                             if (textField.text == "") {
                                 placesList.remove(at: textField.item!.row)
+                                removeColumn(at: textField.item!.row)
                                 sumPrices()
                                 if (currentListTitle != nil) {
                                     guard saveList(title: currentListTitle!) else {
@@ -143,7 +170,15 @@ class AddPlaceListSection: UITableViewCell, UITextFieldDelegate {
                                     }
                                 }
                                 //removeColumn(at: textField.item!.row)
-                                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceBottom"), object: nil)
+                                if (placesListCount() == 0) {
+                                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceBottom"), object: nil)
+                                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enablePlaceTitle"), object: nil)
+                                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enablePlaceTopButton"), object: nil)
+                                } else {
+                                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enablePlaceBottomButton"), object: nil)
+                                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enablePlaceTopButton"), object: nil)
+                                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showPlaceBottom"), object: nil)
+                                }
                                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateLists"), object: nil)
                                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadDataCollection"), object: nil)
                         }
@@ -153,62 +188,7 @@ class AddPlaceListSection: UITableViewCell, UITextFieldDelegate {
                 
             }
         }
-        
     }
-    
-    @objc func textFieldDidChange(_ textField: UITextField) {
-        if (textField.text!.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty) {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "disablePlaceTopButton"), object: nil)
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "disablePlaceBottomButton"), object: nil)
-        } else {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enablePlaceTopButton"), object: nil)
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enablePlaceBottomButton"), object: nil)
-        }
-    }
-    
-    
-    
-    @objc func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
-        if let textField = textField as? PlaceListTextField  {
-            let row = textField.item?.row
-            let res = textField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-            //let text = (textField.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
-            if (!res.isEmpty && row != nil) {
-                if (row == placesList.count-1) {
-                    placesList[row!] = res
-                    addColumnToEnd()
-                } else if (row == 0) {
-                    placesList[row!] = res
-                    addColumnToStart()
-                }
-                sumPrices()
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateLists"), object: nil)
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadDataCollection"), object: nil)
-                textField.endEditing(true)
-                
-            } else {
-                if (buyListCount() == 0) {
-                    //                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceTopButton"), object: nil)
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enablePlaceTopButton"), object: nil)
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceTitle"), object: nil)
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceBottom"), object: nil)
-                }
-                    else {
-                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showPlaceBottom"), object: nil)
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enablePlaceBottomButton"), object: nil)
-                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enablePlaceTitle"), object: nil)
-                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enablePlaceTopButton"), object: nil)
-                    
-                }
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateLists"), object: nil)
-                textField.endEditing(true)
-            }
-        }
-        
-        return false
-    }
-    
     
 }
 

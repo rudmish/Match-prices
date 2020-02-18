@@ -78,7 +78,9 @@ func addRowToStart() {
 /// Удалить из таблицы цен строку
 func removeRow(at index : Int) {
     pricesArray.remove(at: index)
-    sumArray.remove(at: index)
+    if (placesListCount() != 0) {
+        sumArray.remove(at: index)
+    }
     sumPrices()
     if (currentListTitle != nil) {
         guard saveList(title: currentListTitle!) else {
@@ -102,6 +104,8 @@ func addColumnToEnd() {
             return
         }
     }
+    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showScrollPriceSheet"), object: nil)
+    
 }
 
 /// добавление первого столбца магазина
@@ -119,6 +123,7 @@ func addColumnToStart() {
             return
         }
     }
+    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showScrollPriceSheet"), object: nil)
 }
 
 /// Удаление столбца из таблицы цен
@@ -136,15 +141,20 @@ func removeColumn(at index : Int) {
 
 /// пересчет суммы в столбцах
 func sumPrices() {
-    sumArray = [Double?](repeating: 0.00, count: placesListCount())
-    for i in 0..<placesListCount() {
-        var summ = 0.00
-        
-        for j in 0..<buyListCount() {
-            summ += pricesArray[j][i] ?? 0.00
+    
+    if placesListCount() != 0 {
+        sumArray = [Double?](repeating: 0.00, count: placesListCount())
+        for i in 0..<placesListCount() {
+            var summ = 0.00
+            
+            for j in 0..<buyListCount() {
+                summ += pricesArray[j][i] ?? 0.00
+            }
+            sumArray[i]=summ
         }
-        sumArray[i]=summ
     }
+    
+    
     if (currentListTitle != nil) {
         guard saveList(title: currentListTitle!) else {
             return
@@ -352,20 +362,21 @@ func showPriceArrow() {
     {
         
         arrowCounter-=1
-        DispatchQueue.main.asyncAfter(deadline: .now()+1, execute: {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showArrow"), object: nil)
-            
-        })
-        DispatchQueue.main.asyncAfter(deadline: .now()+1.5, execute: {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hideArrow"), object: nil)
-        })
-        DispatchQueue.main.asyncAfter(deadline: .now()+2, execute: {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showArrow"), object: nil)
-            
-        })
-        DispatchQueue.main.asyncAfter(deadline: .now()+2.5, execute: {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hideArrow"), object: nil)
-        })
+        
+//        DispatchQueue.main.asyncAfter(deadline: .now()+1, execute: {
+//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showArrow"), object: nil)
+//
+//        })
+//        DispatchQueue.main.asyncAfter(deadline: .now()+1.5, execute: {
+//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hideArrow"), object: nil)
+//        })
+//        DispatchQueue.main.asyncAfter(deadline: .now()+2, execute: {
+//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showArrow"), object: nil)
+//
+//        })
+//        DispatchQueue.main.asyncAfter(deadline: .now()+2.5, execute: {
+//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hideArrow"), object: nil)
+//        })
         
         
     }

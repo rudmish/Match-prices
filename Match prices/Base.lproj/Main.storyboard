@@ -361,7 +361,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Списки" id="BAK-Tu-59v">
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="j6T-Zl-PNB">
+                        <barButtonItem key="rightBarButtonItem" title="Готово" id="j6T-Zl-PNB">
                             <connections>
                                 <action selector="doneButton:" destination="QFR-Zw-hNi" id="pPg-rD-YqE"/>
                             </connections>

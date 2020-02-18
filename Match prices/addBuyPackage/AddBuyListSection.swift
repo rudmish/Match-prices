@@ -103,41 +103,84 @@ class AddBuyListSection: UITableViewCell, UITextFieldDelegate {
     
     // Проверка окончания ввода текста
     func textFieldDidEndEditing(_ textField: UITextField) {
+        saveRes(textField: textField)
         
-        if let textField = textField as? BuyListTextField  {
-            let row = textField.item?.row // индекс элемента (текстового поля)
-            let res = textField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-            if (!res.isEmpty && row != nil) {
-                // Если введено не пустое значение
-                // Если добавляем в конец
-                if (row == buyList.count-1) {
-                    buyList[row!] = res
-                    addRowToEnd()
-                } else if (row == 0) {
-                    buyList[row!] = res
-                    addRowToStart()
-                } else {
-                    buyList[row!] = res
-                }
-                
-                sumPrices()
-                if (currentListTitle != nil) {
-                    guard saveList(title: currentListTitle!) else {
-                        return
-                    }
-                }
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateLists"), object: nil)
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadDataCollection"), object: nil)
-                if (isFirstStart) {
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "scheduledTimerWithTimeIntervalV2"), object: nil)
-                }
-                
+    }
+    
+    //функция для отображения клавиатуры
+    @objc func showBuyTopKeyboard() {
+        title.becomeFirstResponder()
+    }
+    
+    /// Обработка нажатия кнопки "return"
+    /// - Parameter textField: поле ввода названия продукта
+    @objc func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.endEditing(true)
+        
+        return false
+    }
+}
+
+private func saveRes(textField : UITextField) {
+    if let textField = textField as? BuyListTextField  {
+        let row = textField.item?.row // индекс элемента (текстового поля)
+        let res = textField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        if (!res.isEmpty && row != nil) {
+            // Если введено не пустое значение
+            // Если добавляем в конец
+            if (row == buyList.count-1) {
+                buyList[row!] = res
+                addRowToEnd()
+            } else if (row == 0) {
+                buyList[row!] = res
+                addRowToStart()
             } else {
-                
-                //Если пустое – удаляем соотвествующий элемент списка
-                if (buyList.count > 0) {
-                    if (buyList[0] == "") {
-                        buyList.remove(at: 0)
+                buyList[row!] = res
+            }
+            
+            sumPrices()
+            if (currentListTitle != nil) {
+                guard saveList(title: currentListTitle!) else {
+                    return
+                }
+            }
+            print(sumArray, "simmArray")
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateLists"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadDataCollection"), object: nil)
+            if (isFirstStart) {
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "scheduledTimerWithTimeIntervalV2"), object: nil)
+            }
+            
+        } else {
+            
+            //Если пустое – удаляем соотвествующий элемент списка
+            if (buyList.count > 0) {
+                if (buyList[0] == "") {
+                    
+                    buyList.remove(at: 0)
+                    
+                    //removeRow(at: 0)
+                    if (buyListCount() == 0 && placesListCount() == 0) {
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceTopButton"), object: nil)
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceTitle"), object: nil)
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceBottom"), object: nil)
+                    }
+                    if (placesListCount() != 0) {
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showPlaceBottom"), object: nil)
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showPlaceTopButton"), object: nil)
+                        
+                    }
+                    sumPrices()
+                    if (currentListTitle != nil) {
+                        guard saveList(title: currentListTitle!) else {
+                            return
+                        }
+                    }
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateLists"), object: nil)
+                } else {
+                    if (buyList[buyList.count-1] == "") {
+                        buyList.remove(at: buyList.count-1)
+                        //removeRow(at: buyList.count-1)
                         if (buyListCount() == 0 && placesListCount() == 0) {
                             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceTopButton"), object: nil)
                             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceTitle"), object: nil)
@@ -155,9 +198,10 @@ class AddBuyListSection: UITableViewCell, UITextFieldDelegate {
                             }
                         }
                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateLists"), object: nil)
-                    } else {
-                        if (buyList[buyList.count-1] == "") {
-                            buyList.remove(at: buyList.count-1)
+                    } else
+                        if (textField.text == "") {
+                            buyList.remove(at: textField.item!.row)
+                            removeRow(at: textField.item!.row)
                             if (buyListCount() == 0 && placesListCount() == 0) {
                                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceTopButton"), object: nil)
                                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceTitle"), object: nil)
@@ -175,88 +219,13 @@ class AddBuyListSection: UITableViewCell, UITextFieldDelegate {
                                 }
                             }
                             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateLists"), object: nil)
-                        } else
-                            if (textField.text == "") {
-                                print("сработало")
-                                buyList.remove(at: textField.item!.row)
-                                if (buyListCount() == 0 && placesListCount() == 0) {
-                                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceTopButton"), object: nil)
-                                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceTitle"), object: nil)
-                                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceBottom"), object: nil)
-                                }
-                                if (placesListCount() != 0) {
-                                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showPlaceBottom"), object: nil)
-                                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showPlaceTopButton"), object: nil)
-                                    
-                                }
-                                sumPrices()
-                                if (currentListTitle != nil) {
-                                    guard saveList(title: currentListTitle!) else {
-                                        return
-                                    }
-                                }
-                                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateLists"), object: nil)
-                                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadDataCollection"), object: nil)
-                        }
+                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadDataCollection"), object: nil)
                     }
                 }
             }
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enableBuyTopButton"), object: nil)
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enableBuyBottomButton"), object: nil)
         }
-        
-    }
-    
-    //функция для отображения клавиатуры
-    @objc func showBuyTopKeyboard() {
-        title.becomeFirstResponder()
-    }
-    
-    /// Обработка нажатия кнопки "return"
-    /// - Parameter textField: поле ввода названия продукта
-    @objc func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
-        if let textField = textField as? BuyListTextField  {
-            let row = textField.item?.row
-            let res = textField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-            //let text = (textField.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
-            if (!res.isEmpty && row != nil) {
-                if (row == buyList.count-1) {
-                    buyList[row!] = res
-                    addRowToEnd()
-                } else if (row == 0) {
-                    buyList[row!] = res
-                    addRowToStart()
-                } else {
-                    buyList[row!] = res
-                    
-                }
-                sumPrices()
-                if (currentListTitle != nil) {
-                    guard saveList(title: currentListTitle!) else {
-                        return false
-                    }
-                }
-                
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateLists"), object: nil)
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadDataCollection"), object: nil)
-                textField.endEditing(true)
-                
-            } else {
-                if (buyListCount() == 0) {
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceTopButton"), object: nil)
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceTitle"), object: nil)
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceBottom"), object: nil)
-                } else {
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enableBuyTopButton"), object: nil)
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enableBuyBottomButton"), object: nil)
-                }
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateLists"), object: nil)
-                textField.endEditing(true)
-            }
-        }
-        
-        return false
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enableBuyTopButton"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enableBuyBottomButton"), object: nil)
     }
 }
 

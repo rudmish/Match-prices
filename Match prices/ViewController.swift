@@ -49,6 +49,8 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
         
         NotificationCenter.default.addObserver(self, selector: #selector(scheduledTimerWithTimeIntervalV2), name: NSNotification.Name(rawValue: "scheduledTimerWithTimeIntervalV2"), object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(showScrollPriceSheet), name: NSNotification.Name(rawValue: "showScrollPriceSheet"), object: nil)
+        
         
         // проверка, что запуск первый раз
         if (isFirstStart) {
@@ -168,11 +170,11 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
             }
         }
         // при подгрузка списка с уже 4 полями магазинов
-//        if let cell2 = cell as? PriceSheet {
-//            showPriceArrow()
-//            
-//        }
+        if cell is PriceSheet {
+            showScrollPriceSheet()
+        }
     }
+    
     
    
     
@@ -856,6 +858,37 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
             stopTimerBuyListV2()
         }
     }
+    
+    // MARK: - прокрутка таблицы
+        @objc func showScrollPriceSheet() {
+            
+            if placesListCount() > 3 && arrowCounter > 0
+            {
+                arrowCounter-=1
+                showScrollPriceSheet()
+                
+                collectionViewPrices?.setContentOffset(CGPoint(x: 15, y: 0), animated: true)
+                DispatchQueue.main.asyncAfter(deadline: .now()+0.5, execute: {
+                    collectionViewPrices?.setContentOffset(CGPoint(x: -15, y: 0), animated: true)
+                })
+                
+                //для повторной анимации
+//                DispatchQueue.main.asyncAfter(deadline: .now()+1.0, execute: {
+//                    collectionViewPrices?.setContentOffset(CGPoint(x: 15, y: 0), animated: true)
+//                })
+//                DispatchQueue.main.asyncAfter(deadline: .now()+1.5, execute: {
+//                    collectionViewPrices?.setContentOffset(CGPoint(x: -15, y: 0), animated: true)
+//                })
+                
+            }
+            
+            
+    //        UIView.animate(withDuration: 0.2, animations: {
+    //            collectionViewPrices?.setContentOffset(CGPoint(x: 15, y: 0), animated: false)
+    //            })
+    //
+            
+        }
     
     
 }
