@@ -42,13 +42,17 @@ class AddPlaceListSection: UITableViewCell, UITextFieldDelegate {
             })
             optionMenu.addAction(actionRemove)
             optionMenu.addAction(cancelAction)
-            let keyWindow = UIApplication.shared.connectedScenes
-            .filter({$0.activationState == .foregroundActive})
-            .map({$0 as? UIWindowScene})
-            .compactMap({$0})
-            .first?.windows
-            .filter({$0.isKeyWindow}).first
-            keyWindow?.rootViewController?.present(optionMenu, animated: true, completion: nil)
+            if #available(iOS 13.0, *) {
+                let keyWindow = UIApplication.shared.connectedScenes
+                .filter({$0.activationState == .foregroundActive})
+                .map({$0 as? UIWindowScene})
+                .compactMap({$0})
+                .first?.windows
+                .filter({$0.isKeyWindow}).first
+                keyWindow?.rootViewController?.present(optionMenu, animated: true, completion: nil)
+            } else {
+                UIApplication.shared.keyWindow?.rootViewController?.present(optionMenu, animated: true, completion: nil)
+            }
         }
     }
     

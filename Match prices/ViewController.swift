@@ -69,9 +69,21 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
             self.navigationItem.title = "Новый список"
         }
         // установка кнопок справа в навигационной панели
-        let navBarSavedListsButton = UIBarButtonItem.init(image: UIImage(systemName: "bookmark.fill"), style: .done, target: self, action: #selector(navBarSavedListsButtonAction))
-        let navBarOptionsButton = UIBarButtonItem.init(image: UIImage(systemName: "doc.fill"), style: .done, target: self, action: #selector(navBarOptionsButtonAction))
-        self.navigationItem.rightBarButtonItems = [navBarSavedListsButton, navBarOptionsButton]
+        
+        var navBarSavedListsButton : UIBarButtonItem?
+        if #available(iOS 13.0, *) {
+            navBarSavedListsButton = UIBarButtonItem.init(image: UIImage(systemName: "bookmark.fill"), style: .done, target: self, action: #selector(navBarSavedListsButtonAction))
+        } else {
+            navBarSavedListsButton = UIBarButtonItem.init(image: UIImage(named: "bookmark.fill") , style: .done, target: self, action: #selector(navBarSavedListsButtonAction))
+        }
+        
+        var navBarOptionsButton : UIBarButtonItem?
+        if #available(iOS 13.0, *) {
+            navBarOptionsButton = UIBarButtonItem.init(image: UIImage(systemName: "doc.fill"), style: .done, target: self, action: #selector(navBarOptionsButtonAction))
+        } else {
+            navBarOptionsButton = UIBarButtonItem.init(image: UIImage(named: "doc.fill") , style: .done, target: self, action: #selector(navBarOptionsButtonAction))
+        }
+        self.navigationItem.rightBarButtonItems = [navBarSavedListsButton!, navBarOptionsButton!]
         tableView.setEditing(true, animated: false)
         tableView.allowsSelectionDuringEditing = true
     }

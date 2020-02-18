@@ -40,7 +40,6 @@ class PriceSheet: UITableViewCell {
         NotificationCenter.default.addObserver(self, selector: #selector(showArrow), name: NSNotification.Name(rawValue: "showArrow"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(hideArrow), name: NSNotification.Name(rawValue: "hideArrow"), object: nil)
         
-        imageArrow.image = UIImage(systemName: "arrow.right")
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
