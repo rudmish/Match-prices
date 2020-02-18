@@ -21,6 +21,7 @@ class AddBuyTopSection: UITableViewCell {
             //добавить элемент в список
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "addBuyTop"), object: nil)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "disablePlaceTopButton"), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "disablePlaceTitle"), object: nil)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showPlaceTopButton"), object: nil)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showPlaceList"), object: nil)
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showPlaceTitle"), object: nil)

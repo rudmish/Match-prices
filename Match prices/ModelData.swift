@@ -197,6 +197,7 @@ func checkIfSavedListTitleEmpty(title : String) -> Bool {
 
 /// Получить список названий сохраненных списков
 func getSavedLists() -> [String]? {
+    
     if let listData = UserDefaults.standard.data(forKey: savedListsKey),
         let list = try? JSONDecoder().decode(SavedListTitles.self, from: listData) {
         return list.mList
@@ -215,7 +216,9 @@ func setSavedLists(title : String) {
         let lists = try? JSONDecoder().decode(SavedListTitles.self, from: listData) {
         if (lists.mList != nil) {
             list = lists.mList!
+            titlesList = list
         }
+        UserDefaults.standard.synchronize()
     }
     
     //закодировать
@@ -267,7 +270,9 @@ func removeListFromTitlesList(at index : Int, title : String) {
 /// Возвращает True, если получилось изменить название, fale – не получилось
 /// - Parameter title: обновленное название списка
 func changeTitleList(oldTitle : String, newTitle : String) -> Bool {
+    titlesList = getSavedLists() ?? [String]()
     guard let index = titlesList.firstIndex(of: oldTitle) else {
+        print(titlesList, "22")
         return false
     }
     if (checkIfSavedListTitleEmpty(title: newTitle)) {
@@ -277,6 +282,7 @@ func changeTitleList(oldTitle : String, newTitle : String) -> Bool {
         titlesList.insert(newTitle, at: index)
         updateSavedLists()
         guard saveList(title: currentListTitle!) else {
+            print(titlesList, "23")
             return false
         }
         return true

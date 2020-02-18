@@ -28,7 +28,7 @@ class PriceSheetCell: UICollectionViewCell, UITextFieldDelegate {
         textFieldCell.keyboardType = UIKeyboardType.decimalPad
         textFieldCell.delegate = self
         textFieldCell.attributedPlaceholder = NSAttributedString(string: "-",
-        attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
+                                                                 attributes: [NSAttributedString.Key.foregroundColor: UIColor(named: "table_price_cell_placeholder")! ])
     }
     
     

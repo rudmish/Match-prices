@@ -27,6 +27,11 @@ class AddPlaceTopSection: UITableViewCell {
         
         title.isHidden = true
         if (buyList.count == 0) {
+            addPlaceTopButtonOutlet.isEnabled = false
+        } else {
+            addPlaceTopButtonOutlet.isEnabled = true
+        }
+        if (buyList.count == 0 && placesList.count == 0) {
             addPlaceTopButtonOutlet.isHidden = true
         } else {
             addPlaceTopButtonOutlet.isHidden = false

@@ -168,10 +168,10 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
             }
         }
         // при подгрузка списка с уже 4 полями магазинов
-        if let cell2 = cell as? PriceSheet {
-            showPriceArrow()
-            
-        }
+//        if let cell2 = cell as? PriceSheet {
+//            showPriceArrow()
+//            
+//        }
     }
     
    
@@ -717,9 +717,12 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
                     }
                     
                     currentListTitle = title
+                    
                     setCurrentListTitle()
                     setSavedLists(title: currentListTitle!)
                     
+                    titlesList = getSavedLists() ?? [String]()
+                    print("--", titlesList)
                     if !saveList(title: currentListTitle!) {
                         let alertShowError = UIAlertController(title: "Ошибка", message: "Список с таким названием уже существует", preferredStyle: .alert)
                         let okAction = UIAlertAction(title: "Ok", style: .default)
@@ -878,10 +881,10 @@ extension UITableViewController
     
     @objc func removeBuyEmpty() {
         self.dismissKeyboard()
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enableBuyTopButton"), object: nil)
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enableBuyBottomButton"), object: nil)
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enablePlaceTopButton"), object: nil)
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enablePlaceBottomButton"), object: nil)
+//        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enableBuyTopButton"), object: nil)
+//        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enableBuyBottomButton"), object: nil)
+//        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enablePlaceTopButton"), object: nil)
+//        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enablePlaceBottomButton"), object: nil)
     }
     
     

@@ -13,10 +13,14 @@ class AddPlaceBottomSection: UITableViewCell, UITextFieldDelegate {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        addPlaceBottomButtonOutlet.isHidden = true
         if (buyList.count == 0) {
-            addPlaceBottomButtonOutlet.isHidden = true
+            addPlaceBottomButtonOutlet.isEnabled = false
         } else {
-            addPlaceBottomButtonOutlet.isHidden = false
+            addPlaceBottomButtonOutlet.isEnabled = true
+        }
+        if (buyList.count == 0 && placesList.count == 0) {
+            addPlaceBottomButtonOutlet.isHidden = true
         }
         NotificationCenter.default.addObserver(self, selector: #selector(showItems), name: NSNotification.Name(rawValue: "showPlaceBottom"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(hideItems), name: NSNotification.Name(rawValue: "hidePlaceBottom"), object: nil)
