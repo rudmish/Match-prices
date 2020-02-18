@@ -22,6 +22,9 @@ class AddPlaceBottomSection: UITableViewCell, UITextFieldDelegate {
         if (buyList.count == 0 && placesList.count == 0) {
             addPlaceBottomButtonOutlet.isHidden = true
         }
+        if (placesList.count != 0) {
+            addPlaceBottomButtonOutlet.isHidden =  false
+        }
         NotificationCenter.default.addObserver(self, selector: #selector(showItems), name: NSNotification.Name(rawValue: "showPlaceBottom"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(hideItems), name: NSNotification.Name(rawValue: "hidePlaceBottom"), object: nil)
 

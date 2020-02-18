@@ -143,23 +143,57 @@ class AddBuyListSection: UITableViewCell, UITextFieldDelegate {
                             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceTitle"), object: nil)
                             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceBottom"), object: nil)
                         }
+                        if (placesListCount() != 0) {
+                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showPlaceBottom"), object: nil)
+                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showPlaceTopButton"), object: nil)
+                            
+                        }
+                        sumPrices()
+                        if (currentListTitle != nil) {
+                            guard saveList(title: currentListTitle!) else {
+                                return
+                            }
+                        }
                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateLists"), object: nil)
                     } else {
                         if (buyList[buyList.count-1] == "") {
                             buyList.remove(at: buyList.count-1)
-                            if (buyListCount() == 0) {
+                            if (buyListCount() == 0 && placesListCount() == 0) {
                                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceTopButton"), object: nil)
                                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceTitle"), object: nil)
                                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceBottom"), object: nil)
                             }
+                            if (placesListCount() != 0) {
+                                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showPlaceBottom"), object: nil)
+                                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showPlaceTopButton"), object: nil)
+                                
+                            }
+                            sumPrices()
+                            if (currentListTitle != nil) {
+                                guard saveList(title: currentListTitle!) else {
+                                    return
+                                }
+                            }
                             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateLists"), object: nil)
                         } else
                             if (textField.text == "") {
+                                print("сработало")
                                 buyList.remove(at: textField.item!.row)
-                                if (buyListCount() == 0) {
+                                if (buyListCount() == 0 && placesListCount() == 0) {
                                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceTopButton"), object: nil)
                                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceTitle"), object: nil)
                                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceBottom"), object: nil)
+                                }
+                                if (placesListCount() != 0) {
+                                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showPlaceBottom"), object: nil)
+                                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "showPlaceTopButton"), object: nil)
+                                    
+                                }
+                                sumPrices()
+                                if (currentListTitle != nil) {
+                                    guard saveList(title: currentListTitle!) else {
+                                        return
+                                    }
                                 }
                                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateLists"), object: nil)
                                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadDataCollection"), object: nil)

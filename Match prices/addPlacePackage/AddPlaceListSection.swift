@@ -83,6 +83,11 @@ class AddPlaceListSection: UITableViewCell, UITextFieldDelegate {
                     placesList[row!] = res
                 }
                 sumPrices()
+                if (currentListTitle != nil) {
+                    guard saveList(title: currentListTitle!) else {
+                        return
+                    }
+                }
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateLists"), object: nil)
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadDataCollection"), object: nil)
                 
@@ -104,6 +109,12 @@ class AddPlaceListSection: UITableViewCell, UITextFieldDelegate {
                             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enablePlaceTitle"), object: nil)
                             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enablePlaceTopButton"), object: nil)
                         }
+                        sumPrices()
+                        if (currentListTitle != nil) {
+                            guard saveList(title: currentListTitle!) else {
+                                return
+                            }
+                        }
                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateLists"), object: nil)
                     } else {
                         if (placesList[placesList.count-1] == "") {
@@ -115,10 +126,22 @@ class AddPlaceListSection: UITableViewCell, UITextFieldDelegate {
                                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "enablePlaceTopButton"), object: nil)
                                 
                             }
+                            sumPrices()
+                            if (currentListTitle != nil) {
+                                guard saveList(title: currentListTitle!) else {
+                                    return
+                                }
+                            }
                             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateLists"), object: nil)
                         } else
                             if (textField.text == "") {
                                 placesList.remove(at: textField.item!.row)
+                                sumPrices()
+                                if (currentListTitle != nil) {
+                                    guard saveList(title: currentListTitle!) else {
+                                        return
+                                    }
+                                }
                                 //removeColumn(at: textField.item!.row)
                                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "hidePlaceBottom"), object: nil)
                                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateLists"), object: nil)
