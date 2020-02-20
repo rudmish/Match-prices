@@ -30,6 +30,7 @@ class AddPlaceListSection: UITableViewCell, UITextFieldDelegate {
            
             let actionRemove = UIAlertAction(title: "Удалить", style: .default, handler: {action in
                 placesList.remove(at: self.title.item!.row)
+                removeColumn(at: self.title.item!.row)
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "updateLists"), object: nil)
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadDataCollection"), object: nil)
                 if (placesListCount() == 0) {

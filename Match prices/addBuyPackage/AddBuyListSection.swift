@@ -48,6 +48,7 @@ class AddBuyListSection: UITableViewCell, UITextFieldDelegate {
                 // кнопки удаления и отмены
                 let actionRemove = UIAlertAction(title: "Удалить", style: .default, handler: {action in
                     buyList.remove(at: self.title.item!.row)
+                    removeRow(at: self.title.item!.row)
                     if (currentListTitle != nil) {
                         guard saveList(title: currentListTitle!) else {
                             return

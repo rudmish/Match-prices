@@ -24,6 +24,7 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
     
     var cell = UITableViewCell() //ячейка главной таблицы
     
+    @IBOutlet weak var donationButtonOutlet: UIBarButtonItem!
     @IBAction func donatButton(_ sender: Any) {
 //        reloadDataCollection()
         
@@ -36,7 +37,6 @@ class ViewController: UITableViewController, UICollectionViewDataSource, UIColle
         super.viewDidLoad()
 
         firstStartApp()
-        
         loadStartTestData() 
         //Методы, для доступа к текущим данным из дургих классов. Например, обновить списки
         NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "updateLists"), object: nil) //обновить списки

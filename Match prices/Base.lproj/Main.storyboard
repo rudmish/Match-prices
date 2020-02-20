@@ -48,29 +48,29 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pul-C0-dZQ">
-                                            <rect key="frame" x="20" y="5.5" width="18" height="22"/>
+                                            <rect key="frame" x="13" y="5.5" width="22" height="22"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="18" id="Fu3-Qh-keI"/>
+                                                <constraint firstAttribute="width" constant="22" id="Fu3-Qh-keI"/>
                                                 <constraint firstAttribute="height" constant="22" id="etL-YU-bJa"/>
                                             </constraints>
-                                            <state key="normal" image="plus"/>
+                                            <state key="normal" image="plus" catalog="system"/>
                                             <connections>
                                                 <action selector="Button1:" destination="KX5-b3-bQ0" eventType="touchUpInside" id="JdA-VK-4Qf"/>
                                             </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Добавьте товары для сравнения цен" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fWc-qJ-Fn9">
-                                            <rect key="frame" x="46" y="6" width="360" height="21"/>
+                                            <rect key="frame" x="50" y="6" width="356" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="fWc-qJ-Fn9" firstAttribute="leading" secondItem="Pul-C0-dZQ" secondAttribute="trailing" constant="8" id="6oC-zZ-38l"/>
+                                        <constraint firstItem="fWc-qJ-Fn9" firstAttribute="leading" secondItem="Pul-C0-dZQ" secondAttribute="trailing" constant="15" id="6oC-zZ-38l"/>
                                         <constraint firstItem="fWc-qJ-Fn9" firstAttribute="centerY" secondItem="6j2-uj-XE8" secondAttribute="centerY" id="NOE-RA-M1v"/>
                                         <constraint firstItem="Pul-C0-dZQ" firstAttribute="centerY" secondItem="6j2-uj-XE8" secondAttribute="centerY" id="dQN-wL-uu6"/>
                                         <constraint firstAttribute="trailing" secondItem="fWc-qJ-Fn9" secondAttribute="trailing" constant="8" id="gbs-WD-dnG"/>
-                                        <constraint firstItem="Pul-C0-dZQ" firstAttribute="leading" secondItem="6j2-uj-XE8" secondAttribute="leading" constant="20" symbolic="YES" id="vIO-gb-uh7"/>
+                                        <constraint firstItem="Pul-C0-dZQ" firstAttribute="leading" secondItem="6j2-uj-XE8" secondAttribute="leading" constant="13" id="vIO-gb-uh7"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -109,7 +109,11 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ntI-1u-XuU">
-                                            <rect key="frame" x="20" y="5.5" width="14" height="22"/>
+                                            <rect key="frame" x="17" y="5.5" width="22" height="22"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="22" id="JIz-Nc-E5F"/>
+                                                <constraint firstAttribute="height" constant="22" id="zGp-Ym-2Ij"/>
+                                            </constraints>
                                             <state key="normal" image="plus"/>
                                             <connections>
                                                 <action selector="AddBuyBottomButtonAction:" destination="ZkJ-q0-ctb" eventType="touchUpInside" id="7NV-tv-1Zw"/>
@@ -117,7 +121,7 @@
                                         </button>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="ntI-1u-XuU" firstAttribute="leading" secondItem="8Zs-D0-e2V" secondAttribute="leadingMargin" id="O5F-XN-EIw"/>
+                                        <constraint firstItem="ntI-1u-XuU" firstAttribute="leading" secondItem="8Zs-D0-e2V" secondAttribute="leadingMargin" constant="-3" id="O5F-XN-EIw"/>
                                         <constraint firstItem="ntI-1u-XuU" firstAttribute="centerY" secondItem="8Zs-D0-e2V" secondAttribute="centerY" id="nC4-MY-W65"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -156,10 +160,10 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i6U-Wp-gRh">
-                                            <rect key="frame" x="20" y="5.5" width="18" height="22"/>
+                                            <rect key="frame" x="13" y="5.5" width="22" height="22"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="22" id="NaJ-qU-XOF"/>
-                                                <constraint firstAttribute="width" constant="18" id="YrM-vd-mHo"/>
+                                                <constraint firstAttribute="width" constant="22" id="YrM-vd-mHo"/>
                                             </constraints>
                                             <state key="normal" image="plus"/>
                                             <connections>
@@ -167,7 +171,7 @@
                                             </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Добавьте продукты" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fow-Qw-Oet">
-                                            <rect key="frame" x="46" y="6" width="360" height="21"/>
+                                            <rect key="frame" x="50" y="6" width="356" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -175,9 +179,9 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="fow-Qw-Oet" firstAttribute="centerY" secondItem="tdr-tQ-bi2" secondAttribute="centerY" id="e1l-qs-MJm"/>
-                                        <constraint firstItem="fow-Qw-Oet" firstAttribute="leading" secondItem="i6U-Wp-gRh" secondAttribute="trailing" constant="8" id="gZF-3T-v2F"/>
+                                        <constraint firstItem="fow-Qw-Oet" firstAttribute="leading" secondItem="i6U-Wp-gRh" secondAttribute="trailing" constant="15" id="gZF-3T-v2F"/>
                                         <constraint firstItem="i6U-Wp-gRh" firstAttribute="centerY" secondItem="tdr-tQ-bi2" secondAttribute="centerY" id="lSj-X7-EKc"/>
-                                        <constraint firstItem="i6U-Wp-gRh" firstAttribute="leading" secondItem="tdr-tQ-bi2" secondAttribute="leading" constant="20" symbolic="YES" id="oLb-1I-cfH"/>
+                                        <constraint firstItem="i6U-Wp-gRh" firstAttribute="leading" secondItem="tdr-tQ-bi2" secondAttribute="leading" constant="13" id="oLb-1I-cfH"/>
                                         <constraint firstAttribute="trailing" secondItem="fow-Qw-Oet" secondAttribute="trailing" constant="8" id="xsV-pp-6Dc"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -217,7 +221,11 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fYk-nB-5OT">
-                                            <rect key="frame" x="20" y="5.5" width="14" height="22"/>
+                                            <rect key="frame" x="16" y="5.5" width="22" height="22"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="22" id="IHe-ye-FjT"/>
+                                                <constraint firstAttribute="height" constant="22" id="avV-jW-2H3"/>
+                                            </constraints>
                                             <state key="normal" image="plus"/>
                                             <connections>
                                                 <action selector="addPlaceBottomButton:" destination="wVx-0P-e5i" eventType="touchUpInside" id="vj2-YC-JQc"/>
@@ -225,7 +233,7 @@
                                         </button>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="fYk-nB-5OT" firstAttribute="leading" secondItem="ykK-Nz-V2B" secondAttribute="leadingMargin" id="R1y-I6-Rqj"/>
+                                        <constraint firstItem="fYk-nB-5OT" firstAttribute="leading" secondItem="ykK-Nz-V2B" secondAttribute="leadingMargin" constant="-4" id="R1y-I6-Rqj"/>
                                         <constraint firstItem="fYk-nB-5OT" firstAttribute="centerY" secondItem="ykK-Nz-V2B" secondAttribute="centerY" id="mdl-cj-SX3"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -318,12 +326,15 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="wZ3-sx-88F">
-                        <barButtonItem key="leftBarButtonItem" title="Item" image="info.circle" id="Cw1-5T-7kY">
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="info.circle" catalog="system" id="Cw1-5T-7kY">
                             <connections>
                                 <action selector="donatButton:" destination="25u-ZZ-thg" id="q8w-g7-2vW"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="donationButtonOutlet" destination="Cw1-5T-7kY" id="nCf-cB-YZu"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zeq-GQ-3ff" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -411,7 +422,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="info.circle" width="17" height="17"/>
+        <image name="info.circle" catalog="system" width="64" height="60"/>
         <image name="plus" width="14" height="14"/>
+        <image name="plus" catalog="system" width="64" height="56"/>
     </resources>
 </document>

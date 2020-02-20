@@ -75,19 +75,6 @@ func addRowToStart() {
     }
 }
 
-/// Удалить из таблицы цен строку
-func removeRow(at index : Int) {
-    pricesArray.remove(at: index)
-    if (placesListCount() != 0) {
-        sumArray.remove(at: index)
-    }
-    sumPrices()
-    if (currentListTitle != nil) {
-        guard saveList(title: currentListTitle!) else {
-            return
-        }
-    }
-}
 
 //добавление последнего столбца магазина
 func addColumnToEnd() {
@@ -128,10 +115,26 @@ func addColumnToStart() {
 
 /// Удаление столбца из таблицы цен
 func removeColumn(at index : Int) {
+    print(index, "column")
     for i in 0..<buyListCount() {
         pricesArray[i].remove(at: index)
     }
     sumArray.remove(at: index)
+    if (currentListTitle != nil) {
+        guard saveList(title: currentListTitle!) else {
+            return
+        }
+    }
+}
+
+/// Удалить из таблицы цен строку
+func removeRow(at index : Int) {
+    print(index, "row")
+    pricesArray.remove(at: index)
+    if (placesListCount() != 0) {
+        sumArray.remove(at: index)
+    }
+    sumPrices()
     if (currentListTitle != nil) {
         guard saveList(title: currentListTitle!) else {
             return
